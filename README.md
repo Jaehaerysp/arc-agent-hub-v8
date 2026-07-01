@@ -32,7 +32,7 @@ Build, manage, validate, and monitor AI Agent identities with a modern Web3 dash
 
 **🚀 Live Demo** • **📖 Documentation** • **💻 GitHub** • **🐛 Report Bug** • **💡 Request Feature**
 
-- **Live Demo:** https://YOUR-VERCEL-URL.vercel.app
+- **Live Demo:** https://arc-agent-hub-v3.vercel.app
 - **GitHub:** https://github.com/Jaehaerysp/arc-agent-hub-v3
 - **Architecture:** ./ARCHITECTURE.md
 - **Changelog:** ./CHANGELOG.md
