@@ -15,7 +15,7 @@ import {
   IconExternal,
 } from '../../ui/icons'
 
-const REPO_URL = 'https://github.com/arc-agent-hub/arc-agent-hub'
+const REPO_URL = 'https://github.com/Jaehaerysp/arc-agent-hub-v3'
 const DOCS_URL = 'https://docs.arc.network'
 
 const FEATURES = [
