@@ -6,7 +6,7 @@
 
 ### A Production-Ready Open-Source Dashboard for ERC-8004 AI Agents on Arc Testnet
 
-Build, manage, validate, and monitor AI Agent identities with a modern Web3 dashboard built using **React**, **Vite**, **ethers.js**, and **Arc Testnet**.
+Build, manage, validate, and monitor AI Agent identities with a modern Web3 dashboard built using **React**, **Vite**, **ethers.js**, and **Arc Testnet**. Now integrating **ERC-8183 Agentic Commerce** alongside ERC-8004 Identity.
 
 <p align="center">
 
@@ -74,6 +74,7 @@ Whether you're building AI Agents, experimenting with ERC-8004, or learning Arc 
 | ⚙ Settings | Theme, network info and application settings |
 | 🎨 Design System | Reusable components with glassmorphism styling |
 | 📱 Responsive | Desktop, Tablet and Mobile support |
+| 💼 Jobs (ERC-8183) | Agentic Commerce job lifecycle — dashboard, create, history, and per-job detail with the full create → budget → approve → fund → submit → complete flow |
 
 ---
 
@@ -99,6 +100,10 @@ flowchart LR
     Dashboard --> Settings
 
     Dashboard --> DeveloperTools
+
+    Dashboard --> Jobs["Jobs (ERC-8183)"]
+
+    Jobs --> JobDetail["Job Detail: setBudget → approve → fund → submit → complete"]
 
     Dashboard --> Wallet
 
@@ -196,7 +201,8 @@ npm run lint
 | Item | Location |
 |------|----------|
 | Chain Configuration | src/chains/arc.js |
-| Contract Registry | src/contracts/registry.js |
+| Contract Registry (ERC-8004) | src/contracts/registry.js |
+| Contract Registry (ERC-8183) | src/lib/blockchain/ |
 | Design Tokens | src/styles/tokens.css |
 | Navigation | src/app/nav.js |
 
@@ -212,6 +218,13 @@ No environment variables are required.
 | Reputation Registry | `0x8004B663056A597Dffe9eCcC1965A193B7388713` |
 | Validation Registry | `0x8004Cb1BF31DAf7788923b405b754f57acEB4272` |
 | ANV Token | `0x736223037D622ed365fa641a116daAcED7A5be96` |
+
+**ERC-8183 (Agentic Commerce)** — full job lifecycle UI live as of Sprint 2:
+
+| Contract | Address |
+|----------|---------|
+| Agentic Commerce | `0x0747EEf0706327138c69792bF28Cd525089e4583` |
+| USDC | `0x3600000000000000000000000000000000000000` |
 
 ---
 
@@ -259,6 +272,8 @@ dist
 - ✅ Developer Tools
 - ✅ Responsive Dashboard
 - ✅ Landing Page
+- ✅ ERC-8183 Agentic Commerce — services, routes & navigation (Sprint 1)
+- ✅ ERC-8183 Agentic Commerce — job lifecycle UI (Sprint 2)
 - 🔄 Agent Discovery
 - 🔄 Analytics Dashboard
 - 🔄 Multi-chain Support

@@ -1,4 +1,4 @@
-import { IconDashboard, IconAgent, IconStar, IconShield, IconTransfer, IconSettings, IconTools } from '../ui/icons'
+import { IconDashboard, IconAgent, IconStar, IconShield, IconTransfer, IconSettings, IconTools, IconJob } from '../ui/icons'
 
 export const NAV_ITEMS = [
   { path: '/dashboard', label: 'Dashboard', icon: IconDashboard },
@@ -6,6 +6,7 @@ export const NAV_ITEMS = [
   { path: '/reputation', label: 'Reputation', icon: IconStar },
   { path: '/validation', label: 'Validation', icon: IconShield },
   { path: '/transfer', label: 'Transfer', icon: IconTransfer },
+  { path: '/jobs', label: 'Jobs', icon: IconJob },
   { path: '/settings', label: 'Settings', icon: IconSettings },
   { path: '/developer-tools', label: 'Developer Tools', icon: IconTools },
 ]

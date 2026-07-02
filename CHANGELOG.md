@@ -1,5 +1,48 @@
 # Changelog
 
+## v4.0.0-sprint2 (unreleased)
+
+### Added
+- Full ERC-8183 Jobs UI, replacing the Sprint 1 placeholder, across all four routes (`/jobs`, `/jobs/create`, `/jobs/history`, `/jobs/:id`):
+  - **Jobs dashboard** — Open Jobs / Completed Jobs / Escrow Locked / USDC Earned stat cards, a recent-jobs table, and Create Job / Refresh / History quick actions.
+  - **Create Job** — form for provider address, optional evaluator, description, optional budget, and optional expiration; calls the verified `createJob()` and, if a budget was entered, `setBudget()`, then routes to the new job's detail page.
+  - **Job history** — search (job ID / address / description), status filter, sort (newest/oldest/budget), and client-side pagination over the account's full job list.
+  - **Job detail** — full field display (client/provider/evaluator/budget/expiration/hook), a Created → Budget Set → Approved → Funded → Submitted → Completed timeline, and a role-gated action panel that shows exactly one correct next action per job status.
+- `src/lib/blockchain/jobs.js`: `listJobsForAccount()` (event-log-based job discovery — the SDK has no "list jobs" call) and `getUsdcAllowance()`. Purely additive; none of the seven verified functions were changed.
+- `src/hooks/useJobs.js`, `src/hooks/useJob.js` — polling data hooks for the job list and a single job + allowance, matching `useBalances`' shape.
+- `src/hooks/useAsyncAction.js` — generalizes `useContractWrite`'s loading/error/success lifecycle to wrap any async function, for the jobs.js helpers that do more than one contract call (event parsing, hashing).
+- `src/features/jobs/components/` — `JobStatusBadge`, `JobTimeline`, `JobActionPanel`, `JobsTable`.
+- `src/styles/jobs.css` (table, timeline, filter bar, pagination), built entirely on the existing design tokens — no new palette.
+- `formatExpiry()` / `isExpired()` in `src/lib/format.js`.
+
+### Changed
+- `README.md` and `ARCHITECTURE.md` updated: Jobs marked shipped, roadmap updated, and a new "ERC-8183 Agentic Commerce — job lifecycle UI (Sprint 2)" section documents the job-discovery approach, the client-side Budget Set/Approved status model, and the Create Job budget-chaining behavior.
+
+### Removed
+- `src/features/jobs/ComingSoon.jsx` — the Sprint 1 placeholder, no longer referenced anywhere.
+
+### Preserved (unchanged, verified working)
+- All ERC-8004 and ERC-8183 contract addresses, ABI signatures, RPC endpoint, and explorer URL — untouched.
+- Every existing feature page, hook, provider, and the seven verified `jobs.js` write/read functions — untouched.
+
+## v4.0.0-sprint1
+
+### Added
+- `src/lib/blockchain/` — ERC-8183 Agentic Commerce services, integrated from the verified ERC-8183 SDK: `constants.js`, `abis.js`, `contracts.js`, `helpers.js`, `jobs.js` (createJob/setBudget/approveUsdc/fundJob/submitDeliverable/completeJob/getJob), plus a barrel `index.js`.
+- Placeholder routes `/jobs`, `/jobs/create`, `/jobs/history`, `/jobs/:id` (`src/features/jobs/`), each showing "Coming in Sprint 2" via a shared `ComingSoon` component built from existing design-system primitives.
+- "Jobs" entry in the sidebar navigation (`src/app/nav.js`), with a new `IconJob` icon.
+
+### Changed
+- `README.md` and `ARCHITECTURE.md` updated to document the ERC-8183 integration, its file layout, and the two deliberate adaptations from the SDK (browser wallet signer instead of raw private keys; plain JS instead of TypeScript, matching the existing toolchain).
+
+### Preserved (unchanged, verified working)
+- All ERC-8004 contract addresses, ABI signatures, RPC endpoint, and explorer URL — untouched.
+- Every existing feature page, hook, and provider — untouched.
+- ERC-8183 contract addresses, ABI signatures, and call arguments — carried over unchanged from the verified SDK.
+
+### Notes
+- No job-lifecycle UI or on-chain write logic ships in this sprint — only services and routing scaffolding, per the Sprint 1 scope.
+
 ## v3.0.0
 
 ### Added

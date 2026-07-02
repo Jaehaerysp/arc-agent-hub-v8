@@ -1,7 +1,7 @@
 {
   "name": "arc-agent-hub",
   "private": true,
-  "version": "3.0.0",
+  "version": "4.0.0-sprint2",
   "type": "module",
   "description": "Open-source dashboard for registering and managing ERC-8004 AI agent identities on Arc Testnet — agent registration, reputation, validation, and ANV transfers in one React + ethers.js interface.",
   "keywords": [

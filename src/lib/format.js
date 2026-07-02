@@ -32,3 +32,17 @@ export function formatTokenAmount(value, decimals = 2) {
     maximumFractionDigits: decimals,
   })
 }
+
+/** Formats a unix-seconds (string/number/bigint) job expiry as a date + time. */
+export function formatExpiry(expiredAtSeconds) {
+  if (!expiredAtSeconds) return '—'
+  const ms = Number(expiredAtSeconds) * 1000
+  if (!ms) return '—'
+  return new Date(ms).toLocaleString([], { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+}
+
+/** True if a unix-seconds job expiry is in the past. */
+export function isExpired(expiredAtSeconds) {
+  if (!expiredAtSeconds) return false
+  return Number(expiredAtSeconds) * 1000 < Date.now()
+}

@@ -13,6 +13,10 @@ const ValidationPage = lazy(() => import('../features/validation/ValidationPage'
 const TransferPage = lazy(() => import('../features/transfer/TransferPage'))
 const SettingsPage = lazy(() => import('../features/settings/SettingsPage'))
 const DeveloperToolsPage = lazy(() => import('../features/developer-tools/DeveloperToolsPage'))
+const JobsPage = lazy(() => import('../features/jobs/JobsPage'))
+const CreateJobPage = lazy(() => import('../features/jobs/CreateJobPage'))
+const JobHistoryPage = lazy(() => import('../features/jobs/JobHistoryPage'))
+const JobDetailPage = lazy(() => import('../features/jobs/JobDetailPage'))
 
 export default function App() {
   return (
@@ -35,6 +39,10 @@ export default function App() {
                 <Route path="/reputation" element={<ReputationPage />} />
                 <Route path="/validation" element={<ValidationPage />} />
                 <Route path="/transfer" element={<TransferPage />} />
+                <Route path="/jobs" element={<JobsPage />} />
+                <Route path="/jobs/create" element={<CreateJobPage />} />
+                <Route path="/jobs/history" element={<JobHistoryPage />} />
+                <Route path="/jobs/:id" element={<JobDetailPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/developer-tools" element={<DeveloperToolsPage />} />
                 <Route path="*" element={<Navigate to="/dashboard" replace />} />

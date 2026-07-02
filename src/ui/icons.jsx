@@ -21,6 +21,9 @@ export const IconSettings = (p) => (
 export const IconTools = (p) => (
   <svg {...base} {...p}><path d="M14.7 6.3a4 4 0 015 5l-6 6-3-1-1-3 6-6a4 4 0 01-1-1z" /><path d="M6 17l-2 4 4-2" /></svg>
 )
+export const IconJob = (p) => (
+  <svg {...base} {...p}><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" /><path d="M3 12h18" /></svg>
+)
 export const IconMenu = (p) => (
   <svg {...base} {...p}><path d="M4 7h16M4 12h16M4 17h16" /></svg>
 )

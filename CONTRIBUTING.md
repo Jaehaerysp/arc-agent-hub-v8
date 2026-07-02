@@ -24,6 +24,12 @@ npm run dev
 - Never hardcode chain id / RPC / explorer URL. Import from `src/chains/arc.js`.
 - Use `useContractWrite` for any write transaction so loading/error/success state and activity logging stay consistent across features.
 
+## Working with the ERC-8183 job lifecycle
+
+- Business logic lives in `src/lib/blockchain/` (`constants.js`, `abis.js`, `contracts.js`, `helpers.js`, `jobs.js`) — call these functions from feature pages/hooks rather than constructing `ethers.Contract` instances inline in a component.
+- Every write function in `jobs.js` takes a `signer`. Always pass the connected wallet's signer from `useWalletContext()` — never a raw private key or a server-held wallet, even for testing.
+- Chain id / RPC / explorer still come from `src/chains/arc.js`; `lib/blockchain/constants.js` only adds the ERC-8183-specific addresses (Agentic Commerce, USDC).
+
 ## Style
 
 - Follow the existing design tokens in `src/styles/tokens.css` — don't introduce one-off colors.
