@@ -72,3 +72,9 @@ export const IconSearch = (p) => (
 export const IconActivity = (p) => (
   <svg {...base} {...p}><path d="M3 12h4l2-7 4 14 2-7h6" /></svg>
 )
+export const IconBell = (p) => (
+  <svg {...base} {...p}><path d="M6 8a6 6 0 1112 0c0 5 2 6 2 6H4s2-1 2-6z" /><path d="M10 20a2 2 0 004 0" /></svg>
+)
+export const IconUser = (p) => (
+  <svg {...base} {...p}><circle cx="12" cy="8" r="3.5" /><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" /></svg>
+)
