@@ -13,7 +13,7 @@ export function AttentionList({ items, onSwitchNetwork, onRefreshJobs }) {
           <IconCheck width={16} height={16} />
         </span>
         <div>
-          <div className="mc-attention-empty-title">You're all caught up</div>
+          <div className="mc-attention-empty-title">You&apos;re all caught up</div>
           <div className="mc-attention-empty-desc">Nothing needs your attention right now.</div>
         </div>
       </Card>
