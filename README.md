@@ -219,7 +219,7 @@ No environment variables are required.
 | Validation Registry | `0x8004Cb1BF31DAf7788923b405b754f57acEB4272` |
 | ANV Token | `0x736223037D622ed365fa641a116daAcED7A5be96` |
 
-**ERC-8183 (Agentic Commerce)** — full job lifecycle UI live as of Sprint 2:
+**ERC-8183 (Agentic Commerce)** — full job lifecycle UI live as of Sprint 2, with a professional stats/search/filter/activity dashboard layer added in Sprint 3:
 
 | Contract | Address |
 |----------|---------|
@@ -274,6 +274,7 @@ dist
 - ✅ Landing Page
 - ✅ ERC-8183 Agentic Commerce — services, routes & navigation (Sprint 1)
 - ✅ ERC-8183 Agentic Commerce — job lifecycle UI (Sprint 2)
+- ✅ Job Management dashboard — stats, search, filters, sorting & activity feed (Sprint 3)
 - 🔄 Agent Discovery
 - 🔄 Analytics Dashboard
 - 🔄 Multi-chain Support

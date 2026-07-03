@@ -1,57 +1,27 @@
 import { useNavigate } from 'react-router-dom'
 import { useWalletContext } from '../../app/providers/WalletProvider'
 import { useJobs } from '../../hooks/useJobs'
-import { StatCard } from '../../ui/StatCard'
 import { Card, CardBody } from '../../ui/Card'
 import { EmptyState } from '../../ui/EmptyState'
 import { Button } from '../../ui/Button'
 import { Skeleton } from '../../ui/Skeleton'
 import { Alert } from '../../ui/Alert'
-import { formatTokenAmount } from '../../lib/format'
 import { IconJob } from '../../ui/icons'
 import { JobsTable } from './components/JobsTable'
+import { JobStats } from './components/JobStats'
+import { ActivityFeed } from './components/ActivityFeed'
 
 export default function JobsPage() {
-  const { account, provider, arcExplorer } = useWalletContext()
+  const { account, provider, arcExplorer, activity } = useWalletContext()
   const { jobs, loading, error, refresh } = useJobs(provider, account)
   const navigate = useNavigate()
 
-  const openJobs = jobs.filter((j) => j.status === 0)
-  const completedJobs = jobs.filter((j) => j.status === 3)
-  const escrowLocked = jobs
-    .filter((j) => j.status === 1 || j.status === 2)
-    .reduce((sum, j) => sum + Number(j.budgetFormatted), 0)
-  const usdcEarned = jobs
-    .filter((j) => j.status === 3 && account && j.provider.toLowerCase() === account.toLowerCase())
-    .reduce((sum, j) => sum + Number(j.budgetFormatted), 0)
-
   const recentJobs = jobs.slice(0, 8)
+  const jobActivity = activity.filter((a) => a.type === 'job')
 
   return (
     <div className="dashboard">
-      <div className="stats-grid">
-        <StatCard
-          label="Open Jobs"
-          value={loading && jobs.length === 0 ? <Skeleton width={40} height={26} /> : openJobs.length}
-          sub="Awaiting budget, approval or funding"
-        />
-        <StatCard
-          label="Completed Jobs"
-          value={loading && jobs.length === 0 ? <Skeleton width={40} height={26} /> : completedJobs.length}
-          accent
-          sub="Fully settled on-chain"
-        />
-        <StatCard
-          label="Escrow Locked"
-          value={loading && jobs.length === 0 ? <Skeleton width={70} height={26} /> : `${formatTokenAmount(escrowLocked, 2)} USDC`}
-          sub="Funded, awaiting completion"
-        />
-        <StatCard
-          label="USDC Earned"
-          value={loading && jobs.length === 0 ? <Skeleton width={70} height={26} /> : `${formatTokenAmount(usdcEarned, 2)} USDC`}
-          sub="As provider, completed jobs"
-        />
-      </div>
+      <JobStats jobs={jobs} loading={loading} />
 
       <div className="dashboard-section-title">Quick actions</div>
       <div className="quick-actions-grid">
@@ -111,6 +81,15 @@ export default function JobsPage() {
           )}
         </CardBody>
       </Card>
+
+      <div className="dashboard-section-title">Job activity</div>
+      <ActivityFeed
+        activity={jobActivity}
+        arcExplorer={arcExplorer}
+        limit={6}
+        emptyTitle="No job activity yet"
+        emptyDescription="Job creation, funding, submissions and completions will show up here."
+      />
     </div>
   )
 }

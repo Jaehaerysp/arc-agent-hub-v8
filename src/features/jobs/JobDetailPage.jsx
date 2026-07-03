@@ -8,7 +8,7 @@ import { Skeleton } from '../../ui/Skeleton'
 import { CopyButton } from '../../ui/CopyButton'
 import { EmptyState } from '../../ui/EmptyState'
 import { formatExpiry, isExpired, shortAddr } from '../../lib/format'
-import { ZERO_ADDRESS } from '../../lib/blockchain/constants'
+import { AGENTIC_COMMERCE_ADDRESS, ZERO_ADDRESS } from '../../lib/blockchain/constants'
 import { IconJob, IconExternal } from '../../ui/icons'
 import { JobStatusBadge } from './components/JobStatusBadge'
 import { JobTimeline } from './components/JobTimeline'
@@ -56,6 +56,7 @@ export default function JobDetailPage() {
   return (
     <div className="two-col">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* Overview */}
         <Card>
           <CardBody>
             <PanelHeader icon={<IconJob width={18} height={18} />} title={`Job #${job.id}`} subtitle="ERC-8183 Agentic Commerce" />
@@ -67,6 +68,18 @@ export default function JobDetailPage() {
 
             {error && <Alert variant="error" title="Refresh failed">{error}</Alert>}
 
+            {job.description ? (
+              <p className="panel-desc" style={{ whiteSpace: 'pre-wrap' }}>{job.description}</p>
+            ) : (
+              <p className="panel-desc" style={{ color: 'var(--text-dim)' }}>No description provided for this job.</p>
+            )}
+          </CardBody>
+        </Card>
+
+        {/* Participants */}
+        <Card>
+          <CardBody>
+            <PanelHeader title="Participants" />
             <div className="kv-grid">
               <div className="kv-row">
                 <span className="kv-label">Client</span>
@@ -82,6 +95,15 @@ export default function JobDetailPage() {
                   {job.evaluator === ZERO_ADDRESS ? 'None (client approves)' : <>{shortAddr(job.evaluator)} <CopyButton value={job.evaluator} label="" /></>}
                 </span>
               </div>
+            </div>
+          </CardBody>
+        </Card>
+
+        {/* Budget */}
+        <Card>
+          <CardBody>
+            <PanelHeader title="Budget" />
+            <div className="kv-grid">
               <div className="kv-row">
                 <span className="kv-label">Budget</span>
                 <span className="kv-value">{job.budgetFormatted} USDC</span>
@@ -94,6 +116,23 @@ export default function JobDetailPage() {
                 <span className="kv-label">Hook</span>
                 <span className="kv-value">{job.hook === ZERO_ADDRESS ? 'None' : <>{shortAddr(job.hook)} <CopyButton value={job.hook} label="" /></>}</span>
               </div>
+            </div>
+          </CardBody>
+        </Card>
+
+        {/* Timeline */}
+        <Card>
+          <CardBody>
+            <PanelHeader title="Timeline" />
+            <JobTimeline job={job} allowance={allowance} account={account} />
+          </CardBody>
+        </Card>
+
+        {/* Explorer Links */}
+        <Card>
+          <CardBody>
+            <PanelHeader title="Explorer links" subtitle="View this job's on-chain activity on ArcScan" />
+            <div className="kv-grid">
               {job.createdTxHash && (
                 <div className="kv-row">
                   <span className="kv-label">Creation tx</span>
@@ -104,21 +143,31 @@ export default function JobDetailPage() {
                   </span>
                 </div>
               )}
-            </div>
-
-            {job.description && (
-              <div style={{ marginTop: 16 }}>
-                <div className="kv-label" style={{ marginBottom: 6 }}>Description</div>
-                <p className="panel-desc" style={{ whiteSpace: 'pre-wrap' }}>{job.description}</p>
+              <div className="kv-row">
+                <span className="kv-label">Client wallet</span>
+                <span className="kv-value">
+                  <a href={`${arcExplorer}/address/${job.client}`} target="_blank" rel="noopener noreferrer" className="tx-link">
+                    {shortAddr(job.client)} <IconExternal width={12} height={12} />
+                  </a>
+                </span>
               </div>
-            )}
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardBody>
-            <PanelHeader title="Progress" />
-            <JobTimeline job={job} allowance={allowance} account={account} />
+              <div className="kv-row">
+                <span className="kv-label">Provider wallet</span>
+                <span className="kv-value">
+                  <a href={`${arcExplorer}/address/${job.provider}`} target="_blank" rel="noopener noreferrer" className="tx-link">
+                    {shortAddr(job.provider)} <IconExternal width={12} height={12} />
+                  </a>
+                </span>
+              </div>
+              <div className="kv-row">
+                <span className="kv-label">Agentic Commerce contract</span>
+                <span className="kv-value">
+                  <a href={`${arcExplorer}/address/${AGENTIC_COMMERCE_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="tx-link">
+                    {shortAddr(AGENTIC_COMMERCE_ADDRESS)} <IconExternal width={12} height={12} />
+                  </a>
+                </span>
+              </div>
+            </div>
           </CardBody>
         </Card>
       </div>

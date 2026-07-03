@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useWalletContext } from '../../app/providers/WalletProvider'
 import { useBalances } from '../../hooks/useBalances'
+import { useJobs } from '../../hooks/useJobs'
 import { StatCard } from '../../ui/StatCard'
-import { Card } from '../../ui/Card'
-import { EmptyState } from '../../ui/EmptyState'
-import { Badge } from '../../ui/Badge'
 import { Skeleton } from '../../ui/Skeleton'
-import { formatTime, formatTokenAmount, shortHash } from '../../lib/format'
+import { formatTokenAmount } from '../../lib/format'
 import { IconAgent, IconStar, IconShield, IconTransfer } from '../../ui/icons'
+import { JobStats } from '../jobs/components/JobStats'
+import { ActivityFeed } from '../jobs/components/ActivityFeed'
 
 const QUICK_ACTIONS = [
   { path: '/agents', label: 'Register agent', desc: 'Create an on-chain identity', icon: IconAgent },
@@ -19,9 +19,8 @@ const QUICK_ACTIONS = [
 export default function DashboardPage() {
   const wallet = useWalletContext()
   const { nativeBalance, anvBalance, loading: balancesLoading } = useBalances(wallet.provider, wallet.account)
+  const { jobs, loading: jobsLoading } = useJobs(wallet.provider, wallet.account)
   const navigate = useNavigate()
-
-  const successCount = wallet.activity.filter((a) => a.status === 'success').length
 
   return (
     <div className="dashboard">
@@ -50,6 +49,14 @@ export default function DashboardPage() {
         />
       </div>
 
+      <div className="dashboard-section-title">
+        Job overview
+        <span className="field-hint" style={{ margin: 0 }}>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate('/jobs') }} className="tx-link">View all jobs →</a>
+        </span>
+      </div>
+      <JobStats jobs={jobs} loading={jobsLoading} />
+
       <div className="dashboard-section-title">Quick actions</div>
       <div className="quick-actions-grid">
         {QUICK_ACTIONS.map((a) => {
@@ -68,45 +75,14 @@ export default function DashboardPage() {
         })}
       </div>
 
-      <div className="dashboard-section-title">
-        Recent activity
-        <Badge variant="accent">{successCount} completed</Badge>
-      </div>
-
-      {wallet.activity.length === 0 ? (
-        <Card>
-          <EmptyState
-            icon="◎"
-            title="No activity yet"
-            description="Register an agent, submit feedback, or send a transfer to see it show up here."
-          />
-        </Card>
-      ) : (
-        <div className="activity-list">
-          {wallet.activity.slice(0, 8).map((item) => (
-            <div key={item.id} className={`activity-item ${item.status}`}>
-              <div className="activity-main">
-                <div className="activity-title">{item.label}</div>
-                {item.agentId && <div className="activity-agent">Agent #{item.agentId}</div>}
-                {item.detail && <div className="activity-detail">{item.detail}</div>}
-              </div>
-              <div className="activity-meta">
-                {item.txHash && (
-                  <a
-                    href={`${wallet.arcExplorer}/tx/${item.txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="tx-link"
-                  >
-                    {shortHash(item.txHash)}
-                  </a>
-                )}
-                <div className="activity-time">{formatTime(item.timestamp)}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="dashboard-section-title">Recent activity</div>
+      <ActivityFeed
+        activity={wallet.activity}
+        arcExplorer={wallet.arcExplorer}
+        limit={8}
+        emptyTitle="No activity yet"
+        emptyDescription="Register an agent, submit feedback, or send a transfer to see it show up here."
+      />
     </div>
   )
 }

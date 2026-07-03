@@ -32,6 +32,10 @@ src/
         JobTimeline.jsx     Created → Budget Set → Approved → Funded → Submitted → Completed
         JobActionPanel.jsx  Resolves + renders the single correct next action, role-gated
         JobsTable.jsx       Shared table used by both the dashboard and history page
+        JobStats.jsx        computeJobStats() + reusable 7-card stats grid, shared by Dashboard and Jobs
+        ActivityFeed.jsx    Reusable activity list, shared by Dashboard (all activity) and Jobs (job-only)
+        JobsSearch.jsx      Reusable search box, shared by Job History
+        JobsFilters.jsx     Reusable status-filter pills + sort dropdown, shared by Job History
     Each feature exports a single <FeatureName>Page.jsx, lazy-loaded by the router.
 
   contracts/

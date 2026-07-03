@@ -2,23 +2,16 @@ import { useMemo, useState } from 'react'
 import { useWalletContext } from '../../app/providers/WalletProvider'
 import { useJobs } from '../../hooks/useJobs'
 import { Card, CardBody, PanelHeader } from '../../ui/Card'
-import { Input, Select } from '../../ui/Field'
 import { Button } from '../../ui/Button'
 import { EmptyState } from '../../ui/EmptyState'
 import { Skeleton } from '../../ui/Skeleton'
 import { Alert } from '../../ui/Alert'
-import { JOB_STATUS } from '../../lib/blockchain/constants'
 import { IconJob } from '../../ui/icons'
 import { JobsTable } from './components/JobsTable'
+import { JobsSearch } from './components/JobsSearch'
+import { JobsFilters } from './components/JobsFilters'
 
 const PAGE_SIZE = 10
-
-const SORTS = [
-  { id: 'created_desc', label: 'Newest first' },
-  { id: 'created_asc', label: 'Oldest first' },
-  { id: 'budget_desc', label: 'Budget: high to low' },
-  { id: 'budget_asc', label: 'Budget: low to high' },
-]
 
 export default function JobHistoryPage() {
   const { account, provider, arcExplorer } = useWalletContext()
@@ -69,24 +62,17 @@ export default function JobHistoryPage() {
       <CardBody>
         <PanelHeader icon={<IconJob width={18} height={18} />} title="Job history" subtitle="All jobs where you're the client or provider" />
 
-        <div className="jobs-filter-bar">
-          <Input
-            type="text"
-            placeholder="Search by job ID, address, or description…"
-            value={search}
-            onChange={(e) => updateAndResetPage(setSearch)(e.target.value)}
-          />
-          <Select value={statusFilter} onChange={(e) => updateAndResetPage(setStatusFilter)(e.target.value)}>
-            <option value="all">All statuses</option>
-            {JOB_STATUS.map((label, i) => (
-              <option key={label} value={i}>{label}</option>
-            ))}
-          </Select>
-          <Select value={sort} onChange={(e) => setSort(e.target.value)}>
-            {SORTS.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
-          </Select>
+        <div className="jobs-search-filters-row">
+          <JobsSearch value={search} onChange={updateAndResetPage(setSearch)} />
           <Button variant="ghost" size="sm" onClick={refresh}>Refresh</Button>
         </div>
+
+        <JobsFilters
+          status={statusFilter}
+          onStatusChange={updateAndResetPage(setStatusFilter)}
+          sort={sort}
+          onSortChange={setSort}
+        />
 
         {error && <Alert variant="error" title="Failed to load jobs">{error}</Alert>}
 

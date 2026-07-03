@@ -8,6 +8,7 @@ import AppLayout from './layout/AppLayout'
 const LandingPage = lazy(() => import('../features/landing/LandingPage'))
 const DashboardPage = lazy(() => import('../features/dashboard/DashboardPage'))
 const AgentsPage = lazy(() => import('../features/agents/AgentsPage'))
+const AgentProfilePage = lazy(() => import('../features/agents/AgentProfilePage'))
 const ReputationPage = lazy(() => import('../features/reputation/ReputationPage'))
 const ValidationPage = lazy(() => import('../features/validation/ValidationPage'))
 const TransferPage = lazy(() => import('../features/transfer/TransferPage'))
@@ -36,6 +37,7 @@ export default function App() {
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/agents" element={<AgentsPage />} />
+                <Route path="/agents/:wallet" element={<AgentProfilePage />} />
                 <Route path="/reputation" element={<ReputationPage />} />
                 <Route path="/validation" element={<ValidationPage />} />
                 <Route path="/transfer" element={<TransferPage />} />

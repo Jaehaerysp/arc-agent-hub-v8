@@ -63,3 +63,12 @@ export const IconLayers = (p) => (
 export const IconZap = (p) => (
   <svg {...base} {...p}><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" /></svg>
 )
+export const IconFilter = (p) => (
+  <svg {...base} {...p}><path d="M4 5h16M7 12h10M10 19h4" /></svg>
+)
+export const IconSearch = (p) => (
+  <svg {...base} {...p}><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
+)
+export const IconActivity = (p) => (
+  <svg {...base} {...p}><path d="M3 12h4l2-7 4 14 2-7h6" /></svg>
+)

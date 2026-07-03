@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useWalletContext } from '../../app/providers/WalletProvider'
 import { useAsyncAction } from '../../hooks/useAsyncAction'
@@ -18,8 +18,12 @@ export default function CreateJobPage() {
   const { run, loading, error, success, reset } = useAsyncAction()
   const { toast } = useToast()
   const navigate = useNavigate()
+  const location = useLocation()
 
-  const [provider, setProvider] = useState('')
+  const hiredProvider = location.state?.provider || ''
+  const hiredAgentName = location.state?.agentName || null
+
+  const [provider, setProvider] = useState(hiredProvider)
   const [evaluator, setEvaluator] = useState('')
   const [description, setDescription] = useState('')
   const [budget, setBudgetInput] = useState('')
@@ -108,6 +112,13 @@ export default function CreateJobPage() {
       <Card>
         <CardBody>
           <PanelHeader icon={<IconJob width={18} height={18} />} title="Create job" subtitle="ERC-8183 Agentic Commerce" />
+
+          {hiredAgentName && (
+            <Alert variant="success" title={`Hiring: ${hiredAgentName}`}>
+              The provider address below is pre-filled from the marketplace. You can still change it before submitting.
+            </Alert>
+          )}
+
           <p className="panel-desc">
             Creates a new job for a provider address. If you set a budget here, it&apos;s applied automatically right after creation —
             you&apos;ll still need to approve USDC and fund the job from the job page.

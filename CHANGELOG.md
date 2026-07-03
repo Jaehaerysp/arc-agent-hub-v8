@@ -1,5 +1,30 @@
 # Changelog
 
+## v4.0.0-sprint3 (unreleased)
+
+UI/UX and dashboard polish on top of Sprint 2.1's stable job lifecycle — no protocol, contract, or write-function changes.
+
+### Added
+- `src/features/jobs/components/JobStats.jsx` — reusable 7-card stats grid (`computeJobStats()` + `<JobStats />`: Total / Open / Funded / Submitted / Completed Jobs, Total Escrow Value, Average Budget), now shared by the Dashboard and Jobs pages instead of each page computing its own subset inline.
+- `src/features/jobs/components/ActivityFeed.jsx` — reusable activity list (used by the Dashboard for all activity and by Jobs for `type === 'job'` activity only), replacing duplicated markup that previously lived directly in `DashboardPage.jsx`.
+- `src/features/jobs/components/JobsSearch.jsx` / `JobsFilters.jsx` — reusable search box and status-filter-pills + sort dropdown, now shared by Job History (replacing its inline filter bar) and available to any future jobs view.
+- `IconFilter`, `IconSearch`, `IconActivity` in `src/ui/icons.jsx`, needed by the components above.
+- Dashboard: new "Job overview" section showing the full `JobStats` grid alongside the existing wallet stats.
+- Jobs page: new "Job activity" section showing job-scoped recent activity via `ActivityFeed`.
+- Job detail: the single combined field card is now split into distinct **Overview**, **Participants**, **Budget**, **Timeline**, and **Explorer Links** cards, the last of which adds direct ArcScan links for the client wallet, provider wallet, and the Agentic Commerce contract (previously only the creation tx was linked).
+- Jobs table: explicit **Client** column (previously only a Client/Provider role pill was shown), and columns reordered to Job ID / Status / Client / Provider / Budget / Created / Explorer / Actions.
+- `.stats-grid-jobs`, `.jobs-search-wrap`, `.jobs-filters-row` and related rules in `src/styles/jobs.css`, all built on existing design tokens with the same responsive breakpoints used elsewhere.
+
+### Changed
+- `DashboardPage.jsx`, `JobsPage.jsx`, `JobHistoryPage.jsx` refactored to consume the shared `JobStats` / `ActivityFeed` / `JobsSearch` / `JobsFilters` components instead of duplicating stat-calculation and filter-bar logic.
+
+### Removed
+- `src/features/jobs/components/JobsTimeline.jsx` — an exact duplicate of `JobTimeline.jsx` left over from in-progress work; consolidated to the single `JobTimeline.jsx`.
+
+### Preserved (unchanged, verified working)
+- `createJob()`, `setBudget()`, `approveUsdc()`, `fundJob()`, `submitDeliverable()`, `completeJob()`, `getJob()`, `useJobs()`, `useJob()` — untouched.
+- All ERC-8004/ERC-8183 contract addresses, ABI signatures, RPC endpoint, and explorer URL — untouched.
+
 ## v4.0.0-sprint2 (unreleased)
 
 ### Added

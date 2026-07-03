@@ -13,27 +13,32 @@ export function JobsTable({ jobs, account, arcExplorer }) {
         <thead>
           <tr>
             <th>Job ID</th>
-            <th>Role</th>
+            <th>Status</th>
+            <th>Client</th>
             <th>Provider</th>
             <th>Budget</th>
-            <th>Status</th>
             <th>Created</th>
             <th>Explorer</th>
-            <th></th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {jobs.map((job) => {
             const isClient = account && job.client.toLowerCase() === account.toLowerCase()
+            const isProvider = account && job.provider.toLowerCase() === account.toLowerCase()
             return (
               <tr key={job.id} className="jobs-table-row" onClick={() => navigate(`/jobs/${job.id}`)}>
                 <td className="mono">#{job.id}</td>
-                <td>
-                  <span className={`role-pill ${isClient ? 'client' : 'provider'}`}>{isClient ? 'Client' : 'Provider'}</span>
-                </td>
-                <td className="mono">{shortAddr(job.provider)}</td>
-                <td className="mono">{job.budgetFormatted} USDC</td>
                 <td><JobStatusBadge status={job.status} label={job.statusLabel} /></td>
+                <td className="mono">
+                  {shortAddr(job.client)}
+                  {isClient && <span className="role-pill client" style={{ marginLeft: 6 }}>You</span>}
+                </td>
+                <td className="mono">
+                  {shortAddr(job.provider)}
+                  {isProvider && <span className="role-pill provider" style={{ marginLeft: 6 }}>You</span>}
+                </td>
+                <td className="mono">{job.budgetFormatted} USDC</td>
                 <td>{job.createdAt ? <>{formatDate(job.createdAt)} <span className="text-muted">{formatTime(job.createdAt)}</span></> : '—'}</td>
                 <td>
                   {job.createdTxHash ? (
