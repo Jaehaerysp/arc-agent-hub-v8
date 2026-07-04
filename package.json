@@ -1,9 +1,9 @@
 {
   "name": "arc-agent-hub",
   "private": true,
-  "version": "6.0.0-m1",
+  "version": "6.0.0-m4",
   "type": "module",
-  "description": "Open-source dashboard for registering and managing ERC-8004 AI agent identities on Arc Testnet — agent registration, reputation, validation, and ANV transfers in one React + ethers.js interface.",
+  "description": "Open-source dashboard for registering and managing ERC-8004 AI agent identities on Arc Testnet — agent registration, reputation, validation, marketplace, and ANV transfers in one React + ethers.js interface.",
   "keywords": [
     "arc",
     "arc-testnet",
@@ -17,6 +17,7 @@
     "vite",
     "blockchain",
     "reputation",
+    "marketplace",
     "onchain-identity"
   ],
   "homepage": "https://github.com/Jaehaerysp/arc-agent-hub-v3#readme",
@@ -29,6 +30,9 @@
   },
   "author": "Arc Agent Hub contributors",
   "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
