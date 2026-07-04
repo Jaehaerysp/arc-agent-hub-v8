@@ -8,6 +8,10 @@ import {
   computeOverallStatus,
   computeAttentionItems,
   computeMissionSummary,
+  computeValidationRate,
+  computeActivityBreakdown,
+  computeJobsBreakdown,
+  computeWorkforce,
 } from './dashboardLogic'
 
 const ACCOUNT = '0x1111111111111111111111111111111111111111'
@@ -148,5 +152,85 @@ describe('computeMissionSummary', () => {
   it('pluralizes running jobs and attention items correctly', () => {
     const summary = computeMissionSummary({ jobStats: { funded: 2, submitted: 1 }, attentionItems: [{}, {}] })
     expect(summary).toBe('3 jobs in progress, 2 need your attention.')
+  })
+})
+
+describe('computeValidationRate', () => {
+  it('returns a null rate when nothing has settled yet', () => {
+    expect(computeValidationRate([job({ status: 0 }), job({ status: 1 })])).toEqual({
+      rate: null,
+      completed: 0,
+      rejected: 0,
+      settled: 0,
+    })
+  })
+
+  it('computes an approval rate across completed + rejected client jobs only', () => {
+    const jobs = [job({ status: 3 }), job({ status: 3 }), job({ status: 4 }), job({ status: 2 })]
+    expect(computeValidationRate(jobs)).toEqual({ rate: 67, completed: 2, rejected: 1, settled: 3 })
+  })
+})
+
+describe('computeActivityBreakdown', () => {
+  it('buckets activity entries by type, most frequent first', () => {
+    const activity = [{ type: 'job' }, { type: 'job' }, { type: 'transfer' }, { type: undefined }]
+    const breakdown = computeActivityBreakdown(activity)
+    expect(breakdown[0]).toEqual({ type: 'job', label: 'Jobs', count: 2 })
+    expect(breakdown.find((b) => b.type === 'other')).toEqual({ type: 'other', label: 'Other', count: 1 })
+  })
+
+  it('returns an empty array for no activity', () => {
+    expect(computeActivityBreakdown([])).toEqual([])
+  })
+})
+
+describe('computeJobsBreakdown', () => {
+  it('maps job stats to the four pipeline stages in order', () => {
+    const breakdown = computeJobsBreakdown({ open: 1, funded: 2, submitted: 3, completed: 4 })
+    expect(breakdown).toEqual([
+      { key: 'open', label: 'Open', value: 1 },
+      { key: 'funded', label: 'Funded', value: 2 },
+      { key: 'submitted', label: 'Submitted', value: 3 },
+      { key: 'completed', label: 'Completed', value: 4 },
+    ])
+  })
+})
+
+describe('computeWorkforce', () => {
+  it('includes the account\'s own agent first when registered', () => {
+    const entries = computeWorkforce({ wallet: wallet(), jobs: [], getAgentByWallet: () => null })
+    expect(entries[0]).toMatchObject({ key: 'own', isOwn: true, name: 'Agent #7' })
+  })
+
+  it('omits the own-agent entry when unregistered', () => {
+    const entries = computeWorkforce({ wallet: wallet({ agentId: null }), jobs: [], getAgentByWallet: () => null })
+    expect(entries.some((e) => e.isOwn)).toBe(false)
+  })
+
+  it('adds a deduplicated entry per hired provider, enriched from the catalog when matched', () => {
+    const jobs = [
+      job({ id: '1', client: ACCOUNT, provider: OTHER, status: 1 }),
+      job({ id: '2', client: ACCOUNT, provider: OTHER, status: 2 }),
+    ]
+    const catalog = { name: 'Research Agent', category: 'Research', availability: 'available', successRate: 97 }
+    const entries = computeWorkforce({ wallet: wallet(), jobs, getAgentByWallet: () => catalog })
+    const hired = entries.find((e) => !e.isOwn)
+    expect(hired).toMatchObject({ name: 'Research Agent', role: 'Research', runningJobs: 2, trust: 97 })
+  })
+
+  it('falls back to a short address when the provider is not in the catalog', () => {
+    const jobs = [job({ id: '1', client: ACCOUNT, provider: OTHER, status: 1 })]
+    const entries = computeWorkforce({ wallet: wallet(), jobs, getAgentByWallet: () => null })
+    const hired = entries.find((e) => !e.isOwn)
+    expect(hired.name).toContain('0x2222')
+    expect(hired.role).toBe('Hired provider')
+  })
+
+  it('caps the roster to maxItems', () => {
+    const jobs = Array.from({ length: 10 }, (_, i) =>
+      job({ id: String(i), client: ACCOUNT, provider: `0x${String(i).padStart(40, '3')}`, status: 1 })
+    )
+    const entries = computeWorkforce({ wallet: wallet(), jobs, getAgentByWallet: () => null, maxItems: 4 })
+    expect(entries).toHaveLength(4)
   })
 })

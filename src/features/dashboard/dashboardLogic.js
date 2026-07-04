@@ -199,3 +199,120 @@ export function computeMissionSummary({ jobStats, attentionItems }) {
   }
   return `${jobsClause}, ${attentionItems.length} need${attentionItems.length === 1 ? 's' : ''} your attention.`
 }
+
+/* ------------------------------------------------------------------ */
+/* Mission 3 additions — Dashboard v7 "AI Mission Control" redesign.  */
+/* Everything below is purely additive: new selectors derived from    */
+/* data the page already fetches (wallet, jobs, activity). Nothing    */
+/* above this line was changed, and no new on-chain reads are added.  */
+/* ------------------------------------------------------------------ */
+
+const ACTIVITY_TYPE_LABELS = {
+  agent: 'Agent',
+  job: 'Jobs',
+  validation: 'Validation',
+  transfer: 'Transfer',
+  network: 'Network',
+  other: 'Other',
+}
+
+/**
+ * "Validation" is the client-side mirror of Trust: of the jobs this account
+ * hired a provider for that reached a final outcome, what share were
+ * approved (Completed) rather than Rejected. Trust answers "how good is my
+ * agent's delivered work"; Validation answers "how good are the deliveries
+ * I've approved as a client" — two honest, distinct, already-available
+ * signals, never a fabricated on-chain read.
+ */
+export function computeValidationRate(asClientJobs) {
+  const completed = asClientJobs.filter((j) => j.status === 3).length
+  const rejected = asClientJobs.filter((j) => j.status === 4).length
+  const settled = completed + rejected
+  const rate = settled ? Math.round((completed / settled) * 100) : null
+  return { rate, completed, rejected, settled }
+}
+
+/**
+ * Buckets the wallet's local activity feed by entry `type` — the input for
+ * the Analytics "Activity" chart. Ordered by count, descending, so the most
+ * common activity type reads first.
+ */
+export function computeActivityBreakdown(activity) {
+  const counts = new Map()
+  activity.forEach((item) => {
+    const key = item.type || 'other'
+    counts.set(key, (counts.get(key) || 0) + 1)
+  })
+  return [...counts.entries()]
+    .map(([type, count]) => ({ type, label: ACTIVITY_TYPE_LABELS[type] || type, count }))
+    .sort((a, b) => b.count - a.count)
+}
+
+/** The four job-status counts, in pipeline order, for the Analytics "Jobs" chart. */
+export function computeJobsBreakdown(jobStats) {
+  return [
+    { key: 'open', label: 'Open', value: jobStats.open },
+    { key: 'funded', label: 'Funded', value: jobStats.funded },
+    { key: 'submitted', label: 'Submitted', value: jobStats.submitted },
+    { key: 'completed', label: 'Completed', value: jobStats.completed },
+  ]
+}
+
+/** Local, dependency-free short-address formatter (avoids importing lib/format into this pure-logic module for one helper). */
+function shortAddrLocal(addr) {
+  if (!addr) return ''
+  return `${addr.slice(0, 6)}…${addr.slice(-4)}`
+}
+
+/**
+ * The "AI Workforce" roster: this account's own registered agent (if any),
+ * plus every provider it has hired as a client, deduplicated by wallet.
+ * Enriches a hired provider with its Marketplace catalog entry when the
+ * wallet matches a known agent — never invents a name/category otherwise,
+ * it just falls back to a short address.
+ */
+export function computeWorkforce({ wallet, jobs, getAgentByWallet, maxItems = 6 }) {
+  const { asProvider, asClient } = splitJobsByRole(jobs, wallet.account)
+  const entries = []
+
+  if (wallet.agentId) {
+    const runningJobs = asProvider.filter((j) => j.status === 1 || j.status === 2).length
+    const trust = computeTrust(asProvider)
+    entries.push({
+      key: 'own',
+      wallet: wallet.account,
+      name: `Agent #${wallet.agentId}`,
+      role: 'Your agent',
+      isOwn: true,
+      status: 'registered',
+      runningJobs,
+      trust: trust.rate,
+    })
+  }
+
+  const seen = new Set()
+  asClient.forEach((job) => {
+    const addr = (job.provider || '').toLowerCase()
+    if (!addr || seen.has(addr)) return
+    seen.add(addr)
+
+    const catalogAgent = getAgentByWallet?.(job.provider) || null
+    const providerJobs = asClient.filter((j) => (j.provider || '').toLowerCase() === addr)
+    const runningJobs = providerJobs.filter((j) => j.status === 1 || j.status === 2).length
+
+    entries.push({
+      key: addr,
+      wallet: job.provider,
+      name: catalogAgent?.name || `Agent ${shortAddrLocal(job.provider)}`,
+      role: catalogAgent?.category || 'Hired provider',
+      isOwn: false,
+      status: catalogAgent?.availability || 'engaged',
+      runningJobs,
+      trust: catalogAgent ? catalogAgent.successRate : null,
+    })
+  })
+
+  return entries
+    .sort((a, b) => (b.isOwn - a.isOwn) || b.runningJobs - a.runningJobs)
+    .slice(0, maxItems)
+}

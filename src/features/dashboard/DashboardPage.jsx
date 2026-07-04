@@ -1,64 +1,102 @@
 import { useWalletContext } from '../../app/providers/WalletProvider'
 import { useBalances } from '../../hooks/useBalances'
 import { useJobs } from '../../hooks/useJobs'
-import { ActivityFeed } from '../jobs/components/ActivityFeed'
 import { computeJobStats } from '../jobs/components/JobStats'
-import { MissionHero } from './components/MissionHero'
-import { MissionStatusStrip } from './components/MissionStatusStrip'
-import { AttentionList } from './components/AttentionList'
-import { YourAgentsPanel } from './components/YourAgentsPanel'
-import { QuickActionsPanel } from './components/QuickActionsPanel'
-import { computeMissionCells, computeAttentionItems, computeMissionSummary } from './dashboardLogic'
+import { getAgentByWallet } from '../../data/agents'
+import { Container, Section } from '../../ui/design-system'
+import { MissionControlHero } from './components/MissionControlHero'
+import { MissionMetrics } from './components/MissionMetrics'
+import { AiWorkforcePanel } from './components/AiWorkforcePanel'
+import { MissionAnalytics } from './components/MissionAnalytics'
+import { MissionTimeline } from './components/MissionTimeline'
+import { MissionQuickActions } from './components/MissionQuickActions'
+import {
+  splitJobsByRole,
+  computeTrust,
+  computeValidationRate,
+  computeAttentionItems,
+  computeMissionSummary,
+  computeActivityBreakdown,
+  computeJobsBreakdown,
+  computeWorkforce,
+} from './dashboardLogic'
 
+/**
+ * Dashboard v7 — "AI Mission Control." Layout order: Hero -> Metrics ->
+ * AI Workforce -> Analytics -> Activity Timeline -> Quick Actions, per the
+ * Mission 3 brief. Every number on this page still traces back to the
+ * same three data sources the previous Dashboard used - wallet context,
+ * useBalances, useJobs - no new on-chain reads were added.
+ */
 export default function DashboardPage() {
   const wallet = useWalletContext()
   const { anvBalance, loading: balancesLoading } = useBalances(wallet.provider, wallet.account)
   const { jobs, loading: jobsLoading, error: jobsError, refresh } = useJobs(wallet.provider, wallet.account)
 
   const jobStats = computeJobStats(jobs)
-  const cells = computeMissionCells({ wallet, jobs, jobsError, jobStats })
+  const { asProvider, asClient } = splitJobsByRole(jobs, wallet.account)
+  const trust = computeTrust(asProvider)
+  const validation = computeValidationRate(asClient)
   const attentionItems = computeAttentionItems({ wallet, jobs, jobsError })
   const summary = computeMissionSummary({ jobStats, attentionItems })
-  const trustCell = cells.find((c) => c.key === 'trust')
+  const activityBreakdown = computeActivityBreakdown(wallet.activity)
+  const jobsBreakdown = computeJobsBreakdown(jobStats)
+  const workforce = computeWorkforce({ wallet, jobs, getAgentByWallet })
+
+  const jobsRunning = jobStats.funded + jobStats.submitted
+  const agentCount = wallet.agentId ? 1 : 0
 
   return (
-    <div className="mission-control">
-      {/* 1. Where am I? */}
-      <MissionHero wallet={wallet} summary={summary} anvBalance={anvBalance} balancesLoading={balancesLoading} />
+    <Container size="wide" className="dv7-mission-control">
+      <Section spacing="md">
+        <MissionControlHero
+          wallet={wallet}
+          summary={summary}
+          anvBalance={anvBalance}
+          balancesLoading={balancesLoading}
+          agentCount={agentCount}
+          jobsRunning={jobsRunning}
+          jobsLoading={jobsLoading && jobs.length === 0}
+          trust={trust}
+          validation={validation}
+          attentionItems={attentionItems}
+          onSwitchNetwork={wallet.switchToArc}
+          onRefreshJobs={refresh}
+        />
+      </Section>
 
-      {/* 2. Is everything healthy? */}
-      <MissionStatusStrip cells={cells} loading={jobsLoading && jobs.length === 0} />
+      <Section spacing="md">
+        <MissionMetrics
+          agentCount={agentCount}
+          jobsRunning={jobsRunning}
+          jobsCompleted={jobStats.completed}
+          trust={trust}
+          validation={validation}
+          anvBalance={anvBalance}
+          loading={jobsLoading && jobs.length === 0}
+        />
+      </Section>
 
-      {/* 3. What needs my attention? */}
-      <section className="mc-section">
-        <div className="mc-section-title">Needs your attention</div>
-        <AttentionList items={attentionItems} onSwitchNetwork={wallet.switchToArc} onRefreshJobs={refresh} />
-      </section>
+      <Section spacing="md">
+        <AiWorkforcePanel workforce={workforce} />
+      </Section>
 
-      {/* 4. What is happening? + 5. What do I own? — side by side, same glance */}
-      <div className="mc-split">
-        <section className="mc-section">
-          <div className="mc-section-title">Live activity</div>
-          <ActivityFeed
-            activity={wallet.activity}
-            arcExplorer={wallet.arcExplorer}
-            limit={6}
-            emptyTitle="No activity yet"
-            emptyDescription="Register an agent, submit feedback, or send a transfer to see it show up here."
-          />
-        </section>
+      <Section spacing="md">
+        <MissionAnalytics
+          activityBreakdown={activityBreakdown}
+          jobsBreakdown={jobsBreakdown}
+          trust={trust}
+          validation={validation}
+        />
+      </Section>
 
-        <section className="mc-section">
-          <div className="mc-section-title">Your agents</div>
-          <YourAgentsPanel wallet={wallet} trustCell={trustCell} jobsRunning={jobsLoading ? '—' : jobStats.funded + jobStats.submitted} />
-        </section>
-      </div>
+      <Section spacing="md">
+        <MissionTimeline activity={wallet.activity} arcExplorer={wallet.arcExplorer} limit={8} />
+      </Section>
 
-      {/* 6. What should I do next? */}
-      <section className="mc-section">
-        <div className="mc-section-title">Quick actions</div>
-        <QuickActionsPanel />
-      </section>
-    </div>
+      <Section spacing="md">
+        <MissionQuickActions />
+      </Section>
+    </Container>
   )
 }
