@@ -1,13 +1,13 @@
-import { Card } from '../../../ui/Card'
-import { EmptyState } from '../../../ui/EmptyState'
-import { Button } from '../../../ui/Button'
+import { Panel, Grid, EmptyState, Button } from '../../../ui/design-system'
 import { IconAgent } from '../../../ui/icons'
 import { AgentCard } from './AgentCard'
 
 /**
- * Responsive grid of AgentCard tiles. The empty state names the active
- * filters and offers a one-tap way to clear them — "never a dead end"
- * (Design Vision, UI Blueprint §2.7 Empty).
+ * "All Agents" grid — every listing matching the current search/category/
+ * sort. The empty state names the active filters and offers a one-tap
+ * way to clear them — "never a dead end" (Design Vision, UI Blueprint
+ * §2.7 Empty). Filtering/sorting logic itself is unchanged and lives in
+ * AgentsPage — this component only renders whatever list it's given.
  */
 export function AgentGrid({ agents, search, category, onClearFilters }) {
   if (!agents || agents.length === 0) {
@@ -16,7 +16,7 @@ export function AgentGrid({ agents, search, category, onClearFilters }) {
     if (category && category !== 'All') activeFilters.push(category)
 
     return (
-      <Card>
+      <Panel>
         <EmptyState
           icon={<IconAgent width={22} height={22} />}
           title="No agents match these filters"
@@ -27,21 +27,21 @@ export function AgentGrid({ agents, search, category, onClearFilters }) {
           }
           action={
             activeFilters.length > 0 && onClearFilters ? (
-              <Button variant="ghost" size="sm" onClick={onClearFilters} style={{ marginTop: 12 }}>
+              <Button variant="ghost" size="sm" onClick={onClearFilters}>
                 Clear filters
               </Button>
             ) : null
           }
         />
-      </Card>
+      </Panel>
     )
   }
 
   return (
-    <div className="agent-grid">
+    <Grid minColWidth="280px" gap="md" className="mv7-agent-grid" aria-label="All agents">
       {agents.map((agent) => (
         <AgentCard key={agent.id} agent={agent} />
       ))}
-    </div>
+    </Grid>
   )
 }

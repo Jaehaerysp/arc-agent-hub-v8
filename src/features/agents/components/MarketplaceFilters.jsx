@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
-import { Select } from '../../../ui/Field'
-import { IconSearch } from '../../../ui/icons'
+import { useEffect } from 'react'
+import { SearchInput, Chip, Select } from '../../../ui/design-system'
+
+const SEARCH_INPUT_ID = 'mv7-marketplace-search'
 
 const SORT_OPTIONS = [
   { id: 'reputation', label: 'Reputation' },
@@ -9,14 +10,14 @@ const SORT_OPTIONS = [
 ]
 
 /**
- * Marketplace search + category filter chips + sort. Chips are a proper
- * toggle group (role="group", aria-pressed) per UI Blueprint §2.9. The "/"
- * key focuses search from anywhere on the page, matching the Blueprint's
- * documented keyboard shortcut for this page.
+ * Marketplace v7 sticky search bar — search + category filter chips +
+ * sort, rebuilt on the v7 design system (SearchInput/Chip/Select).
+ * Chips remain a proper toggle group (role="group", aria-pressed) per UI
+ * Blueprint §2.9. The "/" key still focuses search from anywhere on the
+ * page. Props and filtering behavior are unchanged from the previous
+ * Marketplace — only presentation moved to the design system.
  */
 export function MarketplaceFilters({ search, onSearchChange, categories, category, onCategoryChange, sort, onSortChange }) {
-  const searchRef = useRef(null)
-
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key !== '/') return
@@ -24,48 +25,38 @@ export function MarketplaceFilters({ search, onSearchChange, categories, categor
       const isTyping = active && ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName)
       if (isTyping) return
       e.preventDefault()
-      searchRef.current?.focus()
+      document.getElementById(SEARCH_INPUT_ID)?.focus()
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   return (
-    <div className="marketplace-filters">
-      <div className="marketplace-search">
-        <IconSearch width={15} height={15} />
-        <input
-          ref={searchRef}
-          type="text"
-          className="marketplace-search-input"
-          placeholder="Search by name, skill, or wallet…"
+    <div className="mv7-filters">
+      <div className="mv7-filters-search-row">
+        <SearchInput
+          id={SEARCH_INPUT_ID}
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          aria-label="Search agents"
+          onClear={() => onSearchChange('')}
+          placeholder="Search by name, skill, or wallet…"
+          shortcut="/"
+          className="mv7-filters-search"
         />
-        <kbd className="marketplace-search-kbd">/</kbd>
-      </div>
 
-      <div className="marketplace-filters-row">
-        <div className="filter-chip-group" role="group" aria-label="Filter by category">
-          {categories.map((c) => (
-            <button
-              key={c}
-              type="button"
-              className={`filter-chip ${category === c ? 'is-active' : ''}`}
-              aria-pressed={category === c}
-              onClick={() => onCategoryChange(c)}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-
-        <Select value={sort} onChange={(e) => onSortChange(e.target.value)} aria-label="Sort agents" className="marketplace-sort">
+        <Select value={sort} onChange={(e) => onSortChange(e.target.value)} aria-label="Sort agents" className="mv7-filters-sort">
           {SORT_OPTIONS.map((opt) => (
             <option key={opt.id} value={opt.id}>Sort: {opt.label}</option>
           ))}
         </Select>
+      </div>
+
+      <div className="mv7-filters-chip-row" role="group" aria-label="Filter by category">
+        {categories.map((c) => (
+          <Chip key={c} selected={category === c} onClick={() => onCategoryChange(c)}>
+            {c}
+          </Chip>
+        ))}
       </div>
     </div>
   )
