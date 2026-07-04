@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react'
 import { Tabs } from '../../ui/Tabs'
-import { Input, Select } from '../../ui/Field'
 import { AGENTS } from '../../data/agents'
+import { MarketplaceHero } from './components/MarketplaceHero'
+import { FeaturedAgent } from './components/FeaturedAgent'
 import { AgentStats } from './components/AgentStats'
+import { MarketplaceFilters } from './components/MarketplaceFilters'
 import { AgentGrid } from './components/AgentGrid'
 import { RegisterAgentPanel } from './components/RegisterAgentPanel'
 
@@ -13,47 +15,73 @@ const TABS = [
 
 const CATEGORIES = ['All', ...new Set(AGENTS.map((a) => a.category))]
 
+function sortAgents(agents, sort) {
+  const sorted = [...agents]
+  if (sort === 'jobs') return sorted.sort((a, b) => b.completedJobs - a.completedJobs)
+  if (sort === 'rate-asc') return sorted.sort((a, b) => a.averageBudget - b.averageBudget)
+  return sorted.sort((a, b) => b.reputation - a.reputation)
+}
+
 export default function AgentsPage() {
   const [tab, setTab] = useState('marketplace')
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
+  const [sort, setSort] = useState('reputation')
+
+  const featuredAgent = useMemo(
+    () => [...AGENTS].sort((a, b) => b.reputation - a.reputation)[0],
+    [],
+  )
 
   const filteredAgents = useMemo(() => {
     const q = search.trim().toLowerCase()
-    return AGENTS.filter((a) => {
+    const filtered = AGENTS.filter((a) => {
       if (category !== 'All' && a.category !== category) return false
       if (!q) return true
-      return a.name.toLowerCase().includes(q) || a.wallet.toLowerCase().includes(q) || a.category.toLowerCase().includes(q)
+      return (
+        a.name.toLowerCase().includes(q) ||
+        a.wallet.toLowerCase().includes(q) ||
+        a.category.toLowerCase().includes(q) ||
+        a.specialty?.toLowerCase().includes(q) ||
+        a.skills?.some((s) => s.toLowerCase().includes(q))
+      )
     })
-  }, [search, category])
+    return sortAgents(filtered, sort)
+  }, [search, category, sort])
+
+  const clearFilters = () => {
+    setSearch('')
+    setCategory('All')
+  }
 
   return (
     <div className="dashboard">
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
 
       {tab === 'marketplace' ? (
-        <div style={{ marginTop: 18 }}>
-          <div className="dashboard-section-title" style={{ marginTop: 0 }}>Agent Marketplace</div>
-          <p className="panel-desc" style={{ marginTop: -8 }}>
-            Browse available AI agents and hire one directly into a new ERC-8183 job.
-          </p>
+        <div className="marketplace">
+          <MarketplaceHero />
+
+          <FeaturedAgent agent={featuredAgent} />
 
           <AgentStats agents={AGENTS} />
 
-          <div className="jobs-search-filters-row">
-            <Input
-              type="text"
-              placeholder="Search by name, wallet, or category…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              style={{ flex: 1, minWidth: 220 }}
-            />
-            <Select value={category} onChange={(e) => setCategory(e.target.value)} style={{ minWidth: 180 }}>
-              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-            </Select>
-          </div>
+          <MarketplaceFilters
+            search={search}
+            onSearchChange={setSearch}
+            categories={CATEGORIES}
+            category={category}
+            onCategoryChange={setCategory}
+            sort={sort}
+            onSortChange={setSort}
+          />
 
-          <AgentGrid agents={filteredAgents} />
+          <AgentGrid
+            agents={filteredAgents}
+            search={search}
+            category={category}
+            onClearFilters={clearFilters}
+          />
         </div>
       ) : (
         <div style={{ marginTop: 18 }}>
