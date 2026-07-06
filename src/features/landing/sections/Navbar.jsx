@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IconGithub, IconArrowRight, IconMenu, IconClose } from '../../../ui/icons'
+import { AppLogo } from '../../../ui/AppLogo'
 import { NAV_LINKS, REPO_URL, DOCS_URL } from '../landing.data'
 
 export function Navbar() {
@@ -18,7 +19,7 @@ export function Navbar() {
     <header className={`landing-nav ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="landing-shell landing-nav-row">
         <a href="#top" className="landing-brand">
-          <span className="brand-mark">ARC</span>
+          <span className="brand-mark"><AppLogo size={34} /></span>
           <span className="landing-brand-text">Arc Agent Hub</span>
         </a>
         <nav className="landing-nav-links" aria-label="Section">

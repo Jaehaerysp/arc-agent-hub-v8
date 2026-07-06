@@ -1,9 +1,10 @@
 <div align="center">
 
-<!-- Add a hero banner image at .github/assets/banner.png and it will render here. -->
-<!-- <img src=".github/assets/banner.png" alt="Arc Agent Hub" width="100%" /> -->
+<img src=".github/assets/logo.png" alt="Arc Agent Hub v7" width="88" />
 
-# 🚀 Arc Agent Hub
+<img src=".github/assets/banner.png" alt="Arc Agent Hub v7" width="100%" />
+
+# 🚀 Arc Agent Hub v7
 
 ### A Premium, Open-Source Dashboard for ERC-8004 AI Agents on Arc Testnet
 

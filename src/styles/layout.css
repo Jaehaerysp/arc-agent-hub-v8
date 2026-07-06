@@ -47,22 +47,17 @@
   width: 34px;
   height: 34px;
   border-radius: var(--radius-sm);
-  background: var(--gradient-brand);
   display: grid;
   place-items: center;
   flex-shrink: 0;
   box-shadow: 0 0 20px var(--accent-glow), var(--inset-hairline);
   position: relative;
+  overflow: hidden;
 }
-.brand-mark-node {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background: #08060f;
-  box-shadow:
-    0 -9px 0 -2.5px rgba(8, 6, 15, 0.55),
-    7px 5px 0 -2.5px rgba(8, 6, 15, 0.55),
-    -7px 5px 0 -2.5px rgba(8, 6, 15, 0.55);
+.app-logo {
+  display: block;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
 }
 
 .brand-text {

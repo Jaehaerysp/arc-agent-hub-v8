@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { NAV_SECTIONS } from '../nav'
 import { Tooltip } from '../../ui/Tooltip'
+import { AppLogo } from '../../ui/AppLogo'
 import { IconClose, IconCollapse } from '../../ui/icons'
 
 export default function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile, agentId }) {
@@ -10,8 +11,8 @@ export default function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onClo
 
       <aside className={`sidebar ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-brand">
-          <div className="brand-mark" aria-hidden="true">
-            <span className="brand-mark-node" />
+          <div className="brand-mark">
+            <AppLogo size={34} />
           </div>
           <div className="brand-text">
             <span className="brand-title">Arc Agent Hub</span>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { AppLogo } from '../../../ui/AppLogo'
 import { REPO_URL, DOCS_URL } from '../landing.data'
 
 export function Footer() {
@@ -6,7 +7,7 @@ export function Footer() {
     <footer className="landing-footer">
       <div className="landing-shell landing-footer-inner">
         <div className="landing-footer-brand">
-          <span className="brand-mark">ARC</span>
+          <span className="brand-mark"><AppLogo size={28} /></span>
           <span>Arc Agent Hub</span>
         </div>
         <div className="landing-footer-links">
