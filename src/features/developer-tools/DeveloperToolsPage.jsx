@@ -104,7 +104,7 @@ export default function DeveloperToolsPage() {
                 <span className="wv7-devtools-value mono">
                   {c.address}
                   <CopyButton value={c.address} label="" />
-                  <a href={`${arcExplorer}/address/${c.address}`} target="_blank" rel="noopener noreferrer" className="tx-link">↗</a>
+                  <a href={`${arcExplorer}/address/${c.address}`} target="_blank" rel="noopener noreferrer" className="tx-link" aria-label={`View ${c.label} on explorer`}>↗</a>
                 </span>
               </div>
             ))}

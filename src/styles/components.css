@@ -368,49 +368,6 @@
 .empty-state-title { font-weight: 600; color: var(--text-secondary); font-size: 14px; }
 .empty-state-desc { font-size: 12.5px; max-width: 280px; }
 
-/* ===== STAT CARD ===== */
-
-.stat-card {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  overflow: hidden;
-}
-.stat-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--gradient-brand);
-  opacity: 0;
-  transition: opacity 0.2s var(--ease);
-}
-.stat-card:hover::after { opacity: 0.7; }
-.stat-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.stat-value {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-.stat-value.accent {
-  background: var(--gradient-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.stat-sub { font-size: var(--text-xs); color: var(--text-dim); }
-
 /* ===== TOOLTIP ===== */
 
 .tooltip-wrap { position: relative; display: inline-flex; }
@@ -461,33 +418,6 @@
 .tab-trigger.active {
   background: var(--accent-dim);
   color: var(--text-primary);
-}
-
-/* ===== DIALOG / MODAL ===== */
-
-.dialog-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(6, 4, 12, 0.65);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 80;
-  animation: fadeIn var(--duration-modal-in) var(--ease-out);
-  padding: 20px;
-}
-.dialog {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-hover);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  max-width: 440px;
-  width: 100%;
-  padding: 22px;
-  /* Entering feels considered (spring settle); the overlay's own fade-out
-     handles exit, so leaving still feels quick per the Motion System. */
-  animation: dialogIn var(--duration-modal-in) var(--ease-spring);
 }
 
 /* ===== CARD VARIANTS =====
@@ -604,8 +534,6 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes dialogIn { from { opacity: 0; transform: scale(0.96) translateY(4px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 @keyframes chipPulse { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.35; } }
 @keyframes progressIndeterminate { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
 

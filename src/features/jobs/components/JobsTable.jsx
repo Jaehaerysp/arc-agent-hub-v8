@@ -40,7 +40,20 @@ export function JobsTable({ jobs, account, arcExplorer }) {
             const isClient = account && job.client.toLowerCase() === account.toLowerCase()
             const isProvider = account && job.provider.toLowerCase() === account.toLowerCase()
             return (
-              <tr key={job.id} className="jv7-table-row" onClick={() => navigate(`/jobs/${job.id}`)}>
+              <tr
+                key={job.id}
+                className="jv7-table-row"
+                onClick={() => navigate(`/jobs/${job.id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    navigate(`/jobs/${job.id}`)
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`View job #${job.id}`}
+              >
                 <td className="mono jv7-table-id">#{job.id}</td>
                 <td><JobStatusBadge status={job.status} label={job.statusLabel} size="sm" /></td>
                 <td className="mono">
