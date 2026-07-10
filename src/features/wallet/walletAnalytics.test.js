@@ -1,9 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import {
   computeAssetBalances,
+  computeExtendedAssetBalances,
   computeRecentTransactions,
   computeActivityTimeline,
   computeNetworkInfo,
+  computePortfolioTotals,
+  filterAssetsBySearch,
+  filterAssetsByCategory,
   txTypeLabel,
 } from './walletAnalytics'
 
@@ -25,6 +29,34 @@ describe('computeAssetBalances', () => {
   it('flags wrong-network status when not on Arc', () => {
     const assets = computeAssetBalances(null, null, false)
     expect(assets.every((a) => a.status === 'wrong-network')).toBe(true)
+  })
+})
+
+describe('computeExtendedAssetBalances', () => {
+  const base = computeAssetBalances(12.5, 42, true)
+
+  it('appends live token balances after the base native/ANV assets', () => {
+    const tokenBalances = [
+      { key: 'eurc', symbol: 'EURC', name: 'EURC Token', balance: 5, address: '0x1', error: null },
+    ]
+    const assets = computeExtendedAssetBalances(base, tokenBalances, true)
+    expect(assets).toHaveLength(3)
+    expect(assets[2].key).toBe('eurc')
+    expect(assets[2].status).toBe('connected')
+    expect(assets[2].usdValue).toBeNull()
+  })
+
+  it('surfaces a per-token error instead of a fabricated zero balance', () => {
+    const tokenBalances = [
+      { key: 'znp', symbol: 'ZNP', name: 'ZNP Token', balance: null, address: '0x2', error: 'Balance read failed' },
+    ]
+    const assets = computeExtendedAssetBalances(base, tokenBalances, true)
+    expect(assets[2].status).toBe('error')
+    expect(assets[2].balanceFormatted).toBe('Error')
+  })
+
+  it('returns just the base assets when there are no extra tokens yet', () => {
+    expect(computeExtendedAssetBalances(base, [], true)).toHaveLength(2)
   })
 })
 
@@ -59,6 +91,58 @@ describe('computeNetworkInfo', () => {
     const info = computeNetworkInfo({ isArcNetwork: true, chainId: 5042002, rpcUrl: 'https://rpc', blockNumber: 100, gasPriceGwei: 1.2, latencyMs: 50 })
     expect(info.registryStatus).toBe('operational')
     expect(info.contractCount).toBe(4)
+  })
+})
+
+describe('computePortfolioTotals', () => {
+  it('counts tracked tokens and tokens actually held', () => {
+    const assets = [
+      { key: 'a', balance: 5 },
+      { key: 'b', balance: 0 },
+      { key: 'c', balance: null },
+    ]
+    const totals = computePortfolioTotals(assets)
+    expect(totals.totalTokens).toBe(3)
+    expect(totals.totalHeld).toBe(1)
+  })
+})
+
+describe('filterAssetsBySearch', () => {
+  const assets = [
+    { key: 'agc', name: 'AgentCore', symbol: 'AGC', address: '0xAaAa' },
+    { key: 'lqs', name: 'LiquiSwap', symbol: 'LQS', address: '0xBbBb' },
+  ]
+
+  it('matches by name, symbol, or address, case-insensitively', () => {
+    expect(filterAssetsBySearch(assets, 'agent')).toHaveLength(1)
+    expect(filterAssetsBySearch(assets, 'lqs')).toHaveLength(1)
+    expect(filterAssetsBySearch(assets, '0xbbbb')).toHaveLength(1)
+  })
+
+  it('returns everything for an empty query', () => {
+    expect(filterAssetsBySearch(assets, '')).toHaveLength(2)
+    expect(filterAssetsBySearch(assets, '   ')).toHaveLength(2)
+  })
+
+  it('returns nothing when no asset matches', () => {
+    expect(filterAssetsBySearch(assets, 'nope')).toHaveLength(0)
+  })
+})
+
+describe('filterAssetsByCategory', () => {
+  const assets = [
+    { key: 'native', category: 'native' },
+    { key: 'agc', category: 'ai' },
+    { key: 'lqs', category: 'defi' },
+  ]
+
+  it('returns everything for the synthetic "all" category', () => {
+    expect(filterAssetsByCategory(assets, 'all')).toHaveLength(3)
+    expect(filterAssetsByCategory(assets, undefined)).toHaveLength(3)
+  })
+
+  it('filters down to a single category', () => {
+    expect(filterAssetsByCategory(assets, 'ai')).toEqual([{ key: 'agc', category: 'ai' }])
   })
 })
 

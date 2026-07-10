@@ -26,3 +26,8 @@ export function explorerTxUrl(hash) {
 export function explorerAddressUrl(address) {
   return `${ARC_EXPLORER_URL}/address/${address}`
 }
+
+/** Token detail page — used for every "View on ArcScan" link on the Wallet page. */
+export function explorerTokenUrl(contract) {
+  return `${ARC_EXPLORER_URL}/token/${contract}`
+}

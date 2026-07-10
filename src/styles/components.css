@@ -297,6 +297,41 @@
 }
 .tx-link:hover { border-bottom-style: solid; }
 
+/* ===== DIALOG =====
+   Shared modal used by ui/Dialog.jsx. Same overlay/elevation language as
+   .command-overlay/.command-palette in layout.css — kept here instead
+   since Dialog is a general-purpose ui/ primitive, not layout chrome. */
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 3, 9, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 200;
+  animation: fadeIn 0.15s var(--ease);
+}
+
+.dialog {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 22px;
+  animation: paletteIn 0.18s var(--ease-spring);
+}
+
+.dialog h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--text-primary);
+}
+
 /* ===== TOASTS ===== */
 
 .toast-viewport {

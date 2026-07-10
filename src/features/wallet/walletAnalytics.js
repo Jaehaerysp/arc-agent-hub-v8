@@ -26,6 +26,7 @@ export function computeAssetBalances(nativeBalance, anvBalance, isArcNetwork) {
       key: 'native',
       symbol: 'USDC',
       name: 'Native Gas Token',
+      category: 'native',
       balance: nativeBalance,
       balanceFormatted: formatTokenAmount(nativeBalance, 4),
       usdValue: null,
@@ -36,6 +37,7 @@ export function computeAssetBalances(nativeBalance, anvBalance, isArcNetwork) {
       key: 'anv',
       symbol: 'ANV',
       name: 'ANV Token',
+      category: 'custom',
       balance: anvBalance,
       balanceFormatted: formatTokenAmount(anvBalance, 4),
       usdValue: null,
@@ -44,6 +46,69 @@ export function computeAssetBalances(nativeBalance, anvBalance, isArcNetwork) {
       address: CONTRACTS.ANV_TOKEN.address,
     },
   ]
+}
+
+/**
+ * Asset Balances (extended) — merges the two always-tracked assets (native
+ * + ANV, from `computeAssetBalances` above) with live results from
+ * `useTokenBalances` for every other token in the wallet registry. Kept as
+ * a separate function so `computeAssetBalances`'s existing shape/tests are
+ * untouched; WalletPage is the only caller that needs the merged list.
+ *
+ * A token whose read failed keeps `balance: null` and carries its `error`
+ * through so the UI can show a per-card error state instead of silently
+ * showing zero.
+ */
+export function computeExtendedAssetBalances(baseAssets, tokenBalances, isArcNetwork) {
+  const extra = tokenBalances.map((token) => ({
+    key: token.key,
+    symbol: token.symbol,
+    name: token.name,
+    category: token.category,
+    balance: token.balance,
+    balanceFormatted: token.error ? 'Error' : formatTokenAmount(token.balance, 4),
+    usdValue: null,
+    network: NETWORK_LABEL,
+    status: token.error ? 'error' : isArcNetwork ? 'connected' : 'wrong-network',
+    address: token.address,
+    error: token.error,
+  }))
+
+  return [...baseAssets, ...extra]
+}
+
+/**
+ * Portfolio Dashboard totals (Sprint 1 / v8 Wallet Module) — "Total
+ * Assets" is how many tracked tokens the connected account actually
+ * holds a nonzero balance of; "Number of Tokens" is the full tracked
+ * registry size (native + custom + AI + DeFi), regardless of balance.
+ * Both are derived only from the same `assets` list AssetBalances
+ * already renders — no new reads.
+ */
+export function computePortfolioTotals(assets) {
+  const totalHeld = assets.filter((a) => typeof a.balance === 'number' && a.balance > 0).length
+  return {
+    totalTokens: assets.length,
+    totalHeld,
+  }
+}
+
+/**
+ * Search Assets — filters the asset list by name, symbol, or contract
+ * address (the "Explorer" field in the Sprint 1 brief: the identifier
+ * that also drives the ArcScan link). Case-insensitive, matches on any
+ * substring. An empty/whitespace query returns the list unchanged.
+ */
+export function filterAssetsBySearch(assets, query) {
+  const q = query?.trim().toLowerCase()
+  if (!q) return assets
+  return assets.filter((a) => (a.name || '').toLowerCase().includes(q) || (a.symbol || '').toLowerCase().includes(q) || (a.address || '').toLowerCase().includes(q))
+}
+
+/** Category tabs filter — 'all' (the synthetic default) returns the list unchanged. */
+export function filterAssetsByCategory(assets, category) {
+  if (!category || category === 'all') return assets
+  return assets.filter((a) => a.category === category)
 }
 
 const TX_TYPE_LABELS = {
