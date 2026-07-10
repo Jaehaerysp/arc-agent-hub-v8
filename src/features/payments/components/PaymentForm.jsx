@@ -11,15 +11,18 @@ import { IconZap } from '../../../ui/icons'
  * Payments reads as part of the same Treasury surface rather than a new
  * visual language.
  *
- * Only "USDC" is offered in the token selector today — this app tracks
- * one Circle-issued USDC contract (see usdcPaymentService.js) — but the
- * selector is left in place so a second token is a data change, not a
- * UI change.
+ * Sprint 2 (Universal Payment Support): the token selector is now a real
+ * dropdown over every entry in `PAYMENT_TOKENS` (Native/Custom/AI
+ * Agent/DeFi — the same registry the Wallet page reads), instead of a
+ * disabled USDC-only field. Any token added to that registry in the
+ * future shows up here automatically.
  */
 export function PaymentForm({
   to,
   amount,
-  usdcBalance,
+  tokens,
+  selectedToken,
+  balance,
   signer,
   loading,
   submitted,
@@ -30,6 +33,7 @@ export function PaymentForm({
   feeError,
   onToChange,
   onAmountChange,
+  onTokenChange,
   onMax,
   onSubmit,
 }) {
@@ -39,12 +43,14 @@ export function PaymentForm({
     <Panel
       icon={<IconZap width={18} height={18} />}
       title="Payment Form"
-      subtitle="Send Circle USDC on Arc Testnet"
+      subtitle="Send any tracked asset on Arc Testnet"
       className="wv7-transfer-form-panel"
     >
       <div className="wv7-transfer-balance-row">
         <span className="wv7-transfer-balance-label">Available balance</span>
-        <span className="wv7-transfer-balance-value mono">{formatTokenAmount(usdcBalance, 4)} USDC</span>
+        <span className="wv7-transfer-balance-value mono">
+          {formatTokenAmount(balance, 4)} {selectedToken.symbol}
+        </span>
       </div>
 
       <FieldGroup label="Recipient address">
@@ -58,15 +64,24 @@ export function PaymentForm({
       </FieldGroup>
 
       <FieldGroup label="Token">
-        <Select value="USDC" disabled onChange={() => {}} aria-label="Token">
-          <option value="USDC">USDC — Circle USDC</option>
+        <Select
+          value={selectedToken.key}
+          onChange={(e) => onTokenChange(e.target.value)}
+          disabled={loading}
+          aria-label="Token"
+        >
+          {tokens.map((token) => (
+            <option key={token.key} value={token.key}>
+              {token.symbol} — {token.name}
+            </option>
+          ))}
         </Select>
       </FieldGroup>
 
       <FieldGroup label="Amount">
         <div style={{ display: 'flex', gap: 8 }}>
           <Input type="number" value={amount} onChange={(e) => onAmountChange(e.target.value)} disabled={loading} />
-          <Button variant="secondary" size="sm" onClick={onMax} disabled={loading || usdcBalance === null}>
+          <Button variant="secondary" size="sm" onClick={onMax} disabled={loading || balance === null}>
             Max
           </Button>
         </div>
@@ -77,7 +92,9 @@ export function PaymentForm({
           <div className="wv7-transfer-preview-title">Transaction Preview</div>
           <div className="wv7-transfer-preview-row">
             <span>Sending</span>
-            <span className="mono">{amount} USDC</span>
+            <span className="mono">
+              {amount} {selectedToken.symbol}
+            </span>
           </div>
           <div className="wv7-transfer-preview-row">
             <span>To</span>
@@ -102,7 +119,7 @@ export function PaymentForm({
 
       <div className="wv7-transfer-progress" aria-live="polite">
         <Button variant="primary" block loading={loading} onClick={onSubmit} disabled={loading || !signer || submitted}>
-          {submitted ? '✓ Sent' : 'Send USDC'}
+          {submitted ? '✓ Sent' : `Send ${selectedToken.symbol}`}
         </Button>
         {!signer && (
           <p className="field-hint" style={{ marginTop: 10, textAlign: 'center' }}>

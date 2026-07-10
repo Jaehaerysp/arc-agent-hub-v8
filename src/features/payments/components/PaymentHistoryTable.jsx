@@ -16,7 +16,7 @@ function statusBadge(status) {
  */
 export function PaymentHistoryTable({ payments, arcExplorer }) {
   return (
-    <Panel title="Payment History" subtitle="USDC payments sent from this wallet" className="wv7-tx-panel">
+    <Panel title="Payment History" subtitle="Payments sent from this wallet" className="wv7-tx-panel">
       {payments.length === 0 ? (
         <EmptyState
           icon={<IconZap width={22} height={22} />}

@@ -11,15 +11,20 @@ import { PaymentSuccessDialog } from './components/PaymentSuccessDialog'
 import { PaymentHistoryTable } from './components/PaymentHistoryTable'
 import { computePaymentHistory } from './paymentsAnalytics'
 import { USDC_TOKEN } from './services/usdcPaymentService'
+import { PAYMENT_TOKENS, getPaymentToken } from './services/paymentTokens'
 
 /**
- * Payments — sends Circle USDC on Arc Testnet through the connected
+ * Payments — sends any tracked asset on Arc Testnet through the connected
  * browser wallet. Reuses the Wallet feature's architecture from Sprint 1
  * end to end:
- *   - `useTokenBalances` (Wallet's own hook) reads the live USDC balance,
- *     the same way it reads every other token on the Wallet page.
+ *   - `useTokenBalances` (Wallet's own hook) reads live balances for
+ *     every token in `PAYMENT_TOKENS` — the same hook, same reads, the
+ *     Wallet page's Asset Balances panel already uses, just given a
+ *     different token list.
  *   - `usdcPaymentService`/`useFeeEstimate`/`usePaymentSend` follow the
- *     same "pure service + thin hook" shape as `tokenBalanceService`.
+ *     same "pure service + thin hook" shape as `tokenBalanceService`,
+ *     generalized in Sprint 2 to take a `token` argument instead of being
+ *     hardcoded to USDC.
  *   - The send itself goes through the same `useContractWrite` every
  *     other write in this app (Transfer, Agents, Trust) already shares.
  *
@@ -28,8 +33,11 @@ import { USDC_TOKEN } from './services/usdcPaymentService'
  */
 export default function PaymentsPage() {
   const { signer, account, provider, addActivity, activity, arcExplorer } = useWalletContext()
-  const { balances, loading: balanceLoading, refresh: refreshBalance } = useTokenBalances(provider, account, [USDC_TOKEN])
-  const usdcBalance = balances[0]?.balance ?? null
+  const { balances, loading: balanceLoading, refresh: refreshBalance } = useTokenBalances(provider, account, PAYMENT_TOKENS)
+
+  const [tokenKey, setTokenKey] = useState(USDC_TOKEN.key)
+  const selectedToken = useMemo(() => getPaymentToken(tokenKey), [tokenKey])
+  const balance = useMemo(() => balances.find((b) => b.key === tokenKey)?.balance ?? null, [balances, tokenKey])
 
   const [to, setTo] = useState('')
   const [amount, setAmount] = useState('')
@@ -37,7 +45,7 @@ export default function PaymentsPage() {
   const [formError, setFormError] = useState(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
-  const { fee, loading: feeLoading, error: feeError } = useFeeEstimate(provider, account, to, amount)
+  const { fee, loading: feeLoading, error: feeError } = useFeeEstimate(provider, account, to, amount, selectedToken)
   const { sendPayment, loading, error, success, reset } = usePaymentSend(signer, addActivity)
 
   const clearState = () => {
@@ -46,10 +54,16 @@ export default function PaymentsPage() {
     reset()
   }
 
+  const handleTokenChange = (key) => {
+    clearState()
+    setAmount('')
+    setTokenKey(key)
+  }
+
   const handleMax = () => {
-    if (usdcBalance !== null) {
+    if (balance !== null) {
       clearState()
-      setAmount(usdcBalance.toString())
+      setAmount(balance.toString())
     }
   }
 
@@ -60,7 +74,7 @@ export default function PaymentsPage() {
     if (!toTrimmed || !ethers.isAddress(toTrimmed)) return setFormError('Valid recipient address required')
     if (!amount || Number(amount) <= 0) return setFormError('Valid amount required')
 
-    const result = await sendPayment(toTrimmed, amount)
+    const result = await sendPayment(selectedToken, toTrimmed, amount)
 
     if (result) {
       setSubmitted(true)
@@ -81,14 +95,16 @@ export default function PaymentsPage() {
   return (
     <Container size="wide" className="wv7-transfer-page">
       <Section spacing="md">
-        <PaymentsHero usdcBalance={usdcBalance} loading={balanceLoading} />
+        <PaymentsHero token={selectedToken} balance={balance} loading={balanceLoading} />
       </Section>
 
       <Section spacing="md">
         <PaymentForm
           to={to}
           amount={amount}
-          usdcBalance={usdcBalance}
+          tokens={PAYMENT_TOKENS}
+          selectedToken={selectedToken}
+          balance={balance}
           signer={signer}
           loading={loading}
           submitted={submitted}
@@ -99,6 +115,7 @@ export default function PaymentsPage() {
           feeError={feeError}
           onToChange={(v) => { clearState(); setTo(v) }}
           onAmountChange={(v) => { clearState(); setAmount(v) }}
+          onTokenChange={handleTokenChange}
           onMax={handleMax}
           onSubmit={handleSubmit}
         />
@@ -112,6 +129,7 @@ export default function PaymentsPage() {
         open={dialogOpen}
         txHash={success?.txHash}
         amount={amount}
+        tokenSymbol={selectedToken.symbol}
         to={to.trim()}
         arcExplorer={arcExplorer}
         onClose={handleDialogClose}

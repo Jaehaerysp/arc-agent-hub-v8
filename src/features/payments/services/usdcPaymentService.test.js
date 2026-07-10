@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { estimateUsdcTransferFee, USDC_TOKEN, USDC_DECIMALS } from './usdcPaymentService'
+import { estimateUsdcTransferFee, estimateTransferFee, USDC_TOKEN, USDC_DECIMALS } from './usdcPaymentService'
 
 vi.mock('ethers', async () => {
   const actual = await vi.importActual('ethers')
@@ -69,5 +69,23 @@ describe('estimateUsdcTransferFee', () => {
     const result = await estimateUsdcTransferFee(provider, '0xfrom', VALID_ADDRESS, '1.00')
     expect(result.error).toBeTruthy()
     expect(result.gasUnits).toBeNull()
+  })
+})
+
+describe('estimateTransferFee (generic, Sprint 2 — Universal Payment Support)', () => {
+  const OTHER_TOKEN = { key: 'anv', symbol: 'ANV', address: '0x' + '2'.repeat(40), decimals: 18 }
+
+  it('estimates a fee for a non-USDC token using its own address/decimals', async () => {
+    const provider = { getFeeData: async () => ({ gasPrice: 1000000000n }) }
+    const result = await estimateTransferFee(OTHER_TOKEN, provider, '0xfrom', VALID_ADDRESS, '1.00')
+    expect(result.error).toBeNull()
+    expect(result.gasUnits).toBe(65000n)
+  })
+
+  it('estimateUsdcTransferFee is equivalent to calling the generic function with USDC_TOKEN', async () => {
+    const provider = { getFeeData: async () => ({ gasPrice: 1000000000n }) }
+    const viaUsdc = await estimateUsdcTransferFee(provider, '0xfrom', VALID_ADDRESS, '1.00')
+    const viaGeneric = await estimateTransferFee(USDC_TOKEN, provider, '0xfrom', VALID_ADDRESS, '1.00')
+    expect(viaUsdc).toEqual(viaGeneric)
   })
 })

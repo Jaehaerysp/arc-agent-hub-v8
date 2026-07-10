@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { ethers } from 'ethers'
-import { estimateUsdcTransferFee } from '../services/usdcPaymentService'
+import { estimateTransferFee, USDC_TOKEN } from '../services/usdcPaymentService'
 
 const DEBOUNCE_MS = 500
 
 /**
- * Debounced live fee estimate for a pending USDC payment. Re-estimates
- * whenever `to`/`amount` change to a valid pair, using the connected
- * wallet's provider — never runs against an invalid recipient/amount, and
- * never blocks the Send button (see PaymentForm: a stale/failed estimate
- * doesn't stop `usePaymentSend`, it's advisory only, same as
- * `kit.estimateSend()` being a separate call from `kit.send()` in
- * send-usdc.ts).
+ * Debounced live fee estimate for a pending payment in `token` (defaults
+ * to USDC, unchanged from before Sprint 2's Universal Payment Support).
+ * Re-estimates whenever `to`/`amount`/`token` change to a valid
+ * combination, using the connected wallet's provider — never runs against
+ * an invalid recipient/amount, and never blocks the Send button (see
+ * PaymentForm: a stale/failed estimate doesn't stop `usePaymentSend`, it's
+ * advisory only, same as `kit.estimateSend()` being a separate call from
+ * `kit.send()` in send-usdc.ts).
  */
-export function useFeeEstimate(provider, account, to, amount) {
+export function useFeeEstimate(provider, account, to, amount, token = USDC_TOKEN) {
   const [fee, setFee] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -34,7 +35,7 @@ export function useFeeEstimate(provider, account, to, amount) {
     setLoading(true)
 
     const timer = setTimeout(async () => {
-      const result = await estimateUsdcTransferFee(provider, account, toTrimmed, amount)
+      const result = await estimateTransferFee(token, provider, account, toTrimmed, amount)
       if (requestId.current !== currentRequest) return // a newer request superseded this one
 
       setFee(result.error ? null : result)
@@ -43,8 +44,7 @@ export function useFeeEstimate(provider, account, to, amount) {
     }, DEBOUNCE_MS)
 
     return () => clearTimeout(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider, account, toTrimmed, amount, isValid])
+  }, [provider, account, toTrimmed, amount, isValid, token])
 
   return { fee, loading, error }
 }

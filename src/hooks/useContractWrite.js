@@ -18,7 +18,7 @@ export function useContractWrite({ address, abi, signer, addActivity }) {
   }, [])
 
   const execute = useCallback(
-    async (method, args, activityMeta = {}) => {
+    async (method, args, activityMeta = {}, contractOverride) => {
       if (!signer) {
         setError('Connect your wallet to continue')
         return null
@@ -29,7 +29,9 @@ export function useContractWrite({ address, abi, signer, addActivity }) {
       setSuccess(null)
 
       try {
-        const contract = new ethers.Contract(address, abi, signer)
+        const targetAddress = contractOverride?.address || address
+        const targetAbi = contractOverride?.abi || abi
+        const contract = new ethers.Contract(targetAddress, targetAbi, signer)
         const tx = await contract[method](...args)
         const receipt = await tx.wait()
 

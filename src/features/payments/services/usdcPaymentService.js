@@ -37,22 +37,28 @@ export const USDC_TOKEN = {
 }
 
 /**
- * Estimates the network fee for sending `amount` USDC to `to`, using the
- * connected wallet's own gas estimate + current fee data — the same two
- * RPC calls `send-usdc.ts`'s `kit.estimateSend()` wraps, done directly
- * against the USDC contract instead of through Circle's App Kit (which
- * requires a server-side/private-key signer this browser app doesn't use).
+ * Estimates the network fee for sending `amount` of `token` to `to`, using
+ * the connected wallet's own gas estimate + current fee data — the same
+ * two RPC calls `send-usdc.ts`'s `kit.estimateSend()` wraps, done directly
+ * against the token's ERC-20 contract instead of through Circle's App Kit
+ * (which requires a server-side/private-key signer this browser app
+ * doesn't use).
+ *
+ * `token` is any descriptor with `{ address, decimals }` — the same shape
+ * as `USDC_TOKEN` and every `WALLET_TOKENS`/`PAYMENT_TOKENS` entry, so this
+ * one function covers every token the Payment Form offers (Sprint 2 —
+ * Universal Payment Support), not just USDC.
  *
  * Never throws: a failed estimate resolves to `{ ...null fields, error }`
  * so the form can still let the person attempt the send.
  */
-export async function estimateUsdcTransferFee(signerOrProvider, from, to, amount) {
+export async function estimateTransferFee(token, signerOrProvider, from, to, amount) {
   try {
     if (!ethers.isAddress(to)) throw new Error('Invalid recipient address')
     if (!amount || Number(amount) <= 0) throw new Error('Invalid amount')
 
-    const contract = new ethers.Contract(USDC_ADDRESS, ERC20_ABI, signerOrProvider)
-    const parsedAmount = ethers.parseUnits(amount, USDC_DECIMALS)
+    const contract = new ethers.Contract(token.address, ERC20_ABI, signerOrProvider)
+    const parsedAmount = ethers.parseUnits(amount, token.decimals)
 
     const [gasUnits, feeData] = await Promise.all([
       contract.transfer.estimateGas(to, parsedAmount, { from }),
@@ -78,4 +84,13 @@ export async function estimateUsdcTransferFee(signerOrProvider, from, to, amount
       error: e?.reason || e?.shortMessage || e?.message || 'Fee estimate failed',
     }
   }
+}
+
+/**
+ * USDC-specific convenience wrapper, kept for backward compatibility with
+ * existing callers/tests — identical behavior to before Sprint 2, just
+ * implemented in terms of the generic `estimateTransferFee` above.
+ */
+export async function estimateUsdcTransferFee(signerOrProvider, from, to, amount) {
+  return estimateTransferFee(USDC_TOKEN, signerOrProvider, from, to, amount)
 }
