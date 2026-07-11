@@ -108,3 +108,8 @@ export const IconBriefcase = (p) => (
 export const IconTag = (p) => (
   <svg {...base} {...p}><path d="M3 11.5V5a2 2 0 012-2h6.5L21 11.5 12.5 20 3 11.5z" /><circle cx="8" cy="8" r="1.4" fill="currentColor" /></svg>
 )
+// Added for Universal Token Swap (Sprint 4) — additive only, does not
+// change any existing icon export above.
+export const IconSwap = (p) => (
+  <svg {...base} {...p}><path d="M7 4v13M7 17l-3.5-3.5M7 17l3.5-3.5" /><path d="M17 20V7M17 7l3.5 3.5M17 7l-3.5 3.5" /></svg>
+)
