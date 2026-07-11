@@ -8,8 +8,12 @@ const QUOTE_DEBOUNCE_MS = 500
 /**
  * Orchestrates the Swap Flow end to end:
  *
- *   Select Token In -> Select Token Out -> Enter Amount -> Quote -> Swap
- *   -> Transaction Confirmation -> Update Balances -> Save History
+ *   Connect Wallet -> Enter Amount -> Estimate Quote -> Display Quote
+ *   -> Swap -> Update Balances -> Save History
+ *
+ * (Token In/Out selection happens ahead of "Enter Amount" via
+ * `setTokenIn`/`setTokenOut`, then every amount/pair/slippage change
+ * re-triggers "Estimate Quote" below.)
  *
  * Quoting and execution are two different SDK calls
  * (`quoteService.getSwapQuote` / `swapService.executeSwap`) but share one
@@ -33,7 +37,7 @@ export function useSwap(account, addActivity) {
   const [quoteError, setQuoteError] = useState(null)
   const quoteRequestId = useRef(0)
 
-  const [status, setStatus] = useState('idle') // idle | quoting | pending | success | error
+  const [status, setStatus] = useState('idle') // idle | pending | success | error
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
 
@@ -41,9 +45,10 @@ export function useSwap(account, addActivity) {
     account && tokenIn && tokenOut && tokenIn.key !== tokenOut.key && amountIn && Number(amountIn) > 0
   )
 
-  // Debounced quote — re-estimates whenever the pair/amount/slippage
-  // changes to a valid combination. Advisory only: a stale/failed quote
-  // never blocks the Swap button, same as Bridge's `useBridgeEstimate`.
+  // Estimate Quote — re-estimates whenever the pair/amount/slippage
+  // changes to a valid combination (Display Quote is just SwapCard
+  // rendering `quote` below). Advisory only: a stale/failed quote never
+  // blocks the Swap button, same as Bridge's `useBridgeEstimate`.
   useEffect(() => {
     if (!isValid) {
       setQuote(null)

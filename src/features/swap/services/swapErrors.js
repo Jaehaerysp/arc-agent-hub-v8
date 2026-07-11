@@ -62,7 +62,7 @@ export const SWAP_ERROR_DESCRIPTION = {
   [SWAP_ERROR_KIND.USER_REJECTED]: 'The transaction was rejected in your wallet.',
   [SWAP_ERROR_KIND.RPC_FAILURE]: 'The network had trouble processing this request. Please try again in a moment.',
   [SWAP_ERROR_KIND.QUOTE_UNAVAILABLE]: "Couldn't get a quote for this pair right now. Try a different amount or try again shortly.",
-  [SWAP_ERROR_KIND.KIT_KEY_MISSING]: 'Swap is missing its App Kit configuration. Set VITE_SWAP_KIT_KEY and reload.',
+  [SWAP_ERROR_KIND.KIT_KEY_MISSING]: 'Swap is missing its App Kit configuration. Set VITE_CIRCLE_KIT_KEY and reload.',
   [SWAP_ERROR_KIND.SAME_TOKEN]: 'Token In and Token Out must be different.',
   [SWAP_ERROR_KIND.SWAP_FAILED]: 'Something went wrong completing this swap. Please try again.',
   [SWAP_ERROR_KIND.UNKNOWN]: 'Something went wrong with this swap. Please try again.',

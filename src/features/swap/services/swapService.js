@@ -77,12 +77,16 @@ export function getOppositeSwapToken(key) {
 export const SWAP_CHAIN = 'Arc_Testnet'
 
 /**
- * Reads the App Kit "kit key" from the client build. Never throws, never
- * logs the value — see the module doc comment above for why this is a
+ * Reads the App Kit "kit key" from the client build. `VITE_CIRCLE_KIT_KEY`
+ * is the shared Circle configuration var (any future Circle App Kit
+ * feature in this app — swap, bridge, earn — reads from the same name);
+ * `VITE_SWAP_KIT_KEY` is still honored as a fallback so an existing
+ * deployment's `.env` keeps working unchanged. Never throws, never logs
+ * the value — see the module doc comment above for why this is a
  * build-time env var rather than a hardcoded secret.
  */
 export function getSwapKitKey() {
-  return import.meta.env.VITE_SWAP_KIT_KEY || null
+  return import.meta.env.VITE_CIRCLE_KIT_KEY || import.meta.env.VITE_SWAP_KIT_KEY || null
 }
 
 let cachedAdapter = null
@@ -112,7 +116,7 @@ export async function getSwapAdapter() {
 function buildSwapConfig({ slippageBps }) {
   const kitKey = getSwapKitKey()
   if (!kitKey) {
-    throw new Error('KIT_KEY missing — set VITE_SWAP_KIT_KEY in your .env')
+    throw new Error('KIT_KEY missing — set VITE_CIRCLE_KIT_KEY (or VITE_SWAP_KIT_KEY) in your .env')
   }
   return {
     kitKey,
@@ -144,8 +148,6 @@ export async function executeSwap({ account, tokenIn, tokenOut, amountIn, slippa
     const config = buildSwapConfig({ slippageBps })
     const adapter = await getSwapAdapter()
 
-    logger.log('Starting swap', `${amountIn} ${tokenIn.symbol} -> ${tokenOut.symbol}`)
-
     const result = await kit.swap({
       from: { adapter, chain: SWAP_CHAIN },
       tokenIn: tokenIn.symbol,
@@ -154,7 +156,15 @@ export async function executeSwap({ account, tokenIn, tokenOut, amountIn, slippa
       config,
     })
 
-    logger.log('Swap result', result)
+    logger.log('Swap completed', {
+      tokenIn: tokenIn.symbol,
+      tokenOut: tokenOut.symbol,
+      amountIn,
+      amountOut: result.amountOut ?? null,
+      txHash: result.txHash,
+      explorerUrl: result.explorerUrl,
+      status: result.progress?.status ?? 'DONE',
+    })
 
     return {
       txHash: result.txHash,
@@ -165,7 +175,12 @@ export async function executeSwap({ account, tokenIn, tokenOut, amountIn, slippa
       error: null,
     }
   } catch (e) {
-    logger.error('Swap failed', e)
+    logger.error('Swap failed', {
+      tokenIn: tokenIn.symbol,
+      tokenOut: tokenOut.symbol,
+      amountIn,
+      message: e?.reason || e?.shortMessage || e?.message || 'Swap transaction failed',
+    })
     return {
       error: e?.reason || e?.shortMessage || e?.message || 'Swap transaction failed',
     }

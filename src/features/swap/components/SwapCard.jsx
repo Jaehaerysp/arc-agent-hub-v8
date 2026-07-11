@@ -119,11 +119,30 @@ export function SwapCard({
             <span>Estimated output</span>
             <span className="mono">{estimatedOutput}</span>
           </div>
+          {quote?.minimumReceived && (
+            <div className="wv7-transfer-preview-row">
+              <span>Minimum received</span>
+              <span className="mono">
+                {formatTokenAmount(Number(quote.minimumReceived.amount), 6)} {quote.minimumReceived.token}
+              </span>
+            </div>
+          )}
           {quote?.fees?.length > 0 && (
             <div className="wv7-transfer-preview-row">
               <span>Fees</span>
               <span className="mono">
-                {quote.fees.map((f) => `${formatTokenAmount(Number(f.amount), 6)} ${f.token}`).join(' + ')}
+                {quote.fees
+                  .map((f) => (f.amount != null ? `${formatTokenAmount(Number(f.amount), 6)} ${f.token}` : null))
+                  .filter(Boolean)
+                  .join(' + ') || '—'}
+              </span>
+            </div>
+          )}
+          {quote?.estimatedGas?.amount != null && (
+            <div className="wv7-transfer-preview-row">
+              <span>Est. gas</span>
+              <span className="mono">
+                {formatTokenAmount(Number(quote.estimatedGas.amount), 6)} {quote.estimatedGas.token}
               </span>
             </div>
           )}
