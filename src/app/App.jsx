@@ -13,6 +13,7 @@ const TrustCenterPage = lazy(() => import('../features/trust/TrustCenterPage'))
 const WalletPage = lazy(() => import('../features/wallet/WalletPage'))
 const TransferPage = lazy(() => import('../features/transfer/TransferPage'))
 const PaymentsPage = lazy(() => import('../features/payments/PaymentsPage'))
+const BridgePage = lazy(() => import('../features/bridge/BridgePage'))
 const SettingsPage = lazy(() => import('../features/settings/SettingsPage'))
 const DeveloperToolsPage = lazy(() => import('../features/developer-tools/DeveloperToolsPage'))
 const JobsPage = lazy(() => import('../features/jobs/JobsPage'))
@@ -45,6 +46,7 @@ export default function App() {
                 <Route path="/wallet" element={<WalletPage />} />
                 <Route path="/transfer" element={<TransferPage />} />
                 <Route path="/payments" element={<PaymentsPage />} />
+                <Route path="/bridge" element={<BridgePage />} />
                 <Route path="/jobs" element={<JobsPage />} />
                 <Route path="/jobs/create" element={<CreateJobPage />} />
                 <Route path="/jobs/history" element={<JobHistoryPage />} />

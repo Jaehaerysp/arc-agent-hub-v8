@@ -15,6 +15,9 @@ export const IconShield = (p) => (
 export const IconTransfer = (p) => (
   <svg {...base} {...p}><path d="M3 8h13M12 4l4 4-4 4" /><path d="M21 16H8m5 4l-4-4 4-4" /></svg>
 )
+export const IconBridge = (p) => (
+  <svg {...base} {...p}><path d="M2 17V11a2 2 0 012-2h16a2 2 0 012 2v6" /><path d="M6 17V9M12 17V7M18 17V9" /><path d="M2 20h20" /></svg>
+)
 export const IconSettings = (p) => (
   <svg {...base} {...p}><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9c.2.5.7 1 1.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z" /></svg>
 )
@@ -53,6 +56,12 @@ export const IconArrowRight = (p) => (
 )
 export const IconCheck = (p) => (
   <svg {...base} {...p}><path d="M5 12l5 5L20 7" /></svg>
+)
+export const IconAlertTriangle = (p) => (
+  <svg {...base} {...p}><path d="M12 3.5l9.5 16.5H2.5L12 3.5z" strokeLinejoin="round" /><path d="M12 10v4.5" /><circle cx="12" cy="17.5" r="0.6" fill="currentColor" stroke="none" /></svg>
+)
+export const IconX = (p) => (
+  <svg {...base} {...p}><path d="M6 6l12 12M18 6L6 18" /></svg>
 )
 export const IconBook = (p) => (
   <svg {...base} {...p}><path d="M4 4.5A2.5 2.5 0 016.5 2H20v17H6.5A2.5 2.5 0 004 21.5v-17z" /><path d="M4 4.5v17M20 19h-13.5A2.5 2.5 0 004 21.5" /></svg>
