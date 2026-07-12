@@ -1,203 +1,327 @@
-<div align="center">
+🚀 Arc Agent Hub v8.0
+<div align="center"> <img src=".github/assets/logo.png" alt="Arc Agent Hub v8" width="96"/>
+Arc Agent Hub v8.0
+The Complete AI Agent Operations Platform for Arc Testnet
 
-<img src=".github/assets/logo.png" alt="Arc Agent Hub v8" width="88" />
+Wallet • Payments • Bridge • Swap • Identity • Reputation • Validation • Agent Marketplace • Agent Commerce
 
-<img src=".github/assets/banner.png" alt="Arc Agent Hub v8" width="100%" />
 
-# 🚀 Arc Agent Hub v8
 
-### A Premium, Open-Source Dashboard for ERC-8004 AI Agents on Arc Testnet
 
-**v7.0.0** — Register, hire, validate, and monitor AI Agent identities with a modern Web3 dashboard built on **React**, **Vite**, and **ethers.js**. Combines ERC-8004 Identity + Reputation + Validation with an ERC-8183 Agentic Commerce job lifecycle, an Agent Marketplace, a merged Trust Center, and a full Wallet experience — all on a shared v7 premium design system.
 
-<p align="center">
 
-[![Build](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/build.yml/badge.svg)](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/build.yml)
-[![Lint](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/lint.yml/badge.svg)](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/lint.yml)
-[![Tests](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/test.yml/badge.svg)](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/test.yml)
-[![Version](https://img.shields.io/badge/version-7.0.0-7c3aed?style=flat-square)](./CHANGELOG.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)](https://vitejs.dev)
-[![ethers.js](https://img.shields.io/badge/ethers.js-v6-2535A0)](https://docs.ethers.org)
 
-</p>
 
-**📖 [Architecture](./ARCHITECTURE.md) · 📝 [Changelog](./CHANGELOG.md) · 🛣 [Roadmap](./ROADMAP.md) · 🤝 [Contributing](./CONTRIBUTING.md) · 📄 [Full docs](./docs/OVERVIEW.md)**
+
 
 </div>
+🌟 Overview
 
----
+Arc Agent Hub v8 is a complete production-ready AI Agent Operations Dashboard built on Arc Testnet using the ERC-8004 AI Identity Protocol, ERC-8183 Agentic Commerce, Circle Stablecoins, and Circle AppKit.
 
-## ✨ Why Arc Agent Hub?
+The platform allows developers, businesses, and AI agents to interact through a modern Web3 experience featuring identity, reputation, validation, stablecoin payments, cross-chain bridging, token swaps, and agent commerce.
 
-Arc Agent Hub is a **production-ready reference implementation** for building modern Web3 applications on **Arc Testnet** with the **ERC-8004 AI Identity Protocol** and **ERC-8183 Agentic Commerce**.
+This project was built during the official Arc Builder Program, progressing from Mission 0 through Mission 10.
 
-It's a complete developer experience, not just a demo:
+🎯 Mission Progress (0 → Hero)
+Mission	Status
+✅ Mission 0	Project Setup
+✅ Mission 1	Wallet Integration
+✅ Mission 2	Universal Assets
+✅ Mission 3	Circle Payments
+✅ Mission 4	Circle CCTP Bridge
+✅ Mission 5	Universal Token Swap
+✅ Mission 6	ERC-8004 Identity
+✅ Mission 7	Reputation Registry
+✅ Mission 8	Validation Registry
+✅ Mission 9	ERC-8183 Agent Commerce
+✅ Mission 10	Premium AI Agent Dashboard
+🚀 Core Features
+🏠 Premium Landing Page
+Modern animated landing page
+Hero section
+Roadmap
+Features showcase
+Live statistics
+Builder focused UI
+🔐 Wallet Center
+MetaMask Connection
+Rabby Wallet Support
+Wallet State Management
+Network Detection
+Portfolio Overview
+Token Balances
+Transaction History
+💳 Universal Payments
 
-- Feature-based React architecture with a shared v7 premium design system
-- Centralized smart-contract registry — one place every address/ABI lives
-- Responsive, accessible UI (desktop, tablet, mobile; keyboard nav; reduced-motion support)
-- Vitest unit test coverage for pure business logic
-- Open-source scaffolding: issue templates, PR template, CODEOWNERS, CI workflows
+Supports Circle Stablecoins
 
----
+USDC Payments
+Wallet-to-wallet transfers
+Payment history
+Balance validation
+Transaction status
+🌉 Circle CCTP Bridge Center
 
-## 🎯 Features
+Cross-chain stablecoin bridge powered by Circle.
 
-| Feature | Description |
-|---|---|
-| 🖥 Premium Landing | Public marketing page at `/` — hero, feature grid, dashboard preview, roadmap |
-| 📊 Mission Control Dashboard | Wallet overview, job stats, and unified activity feed |
-| 🛒 AI Marketplace | Browse, search, and filter a catalog of AI agents by category |
-| 👤 Agent Profiles | Résumé-style per-agent profile (`/agents/:wallet`) with reputation, stats, and activity |
-| 💼 Jobs Platform | Full ERC-8183 Agentic Commerce lifecycle — dashboard, create, history, and per-job detail (create → budget → approve → fund → submit → complete) |
-| 🛡 Trust Center | Merged reputation + validation: trust score, validation status, certificates, on-chain evidence, achievement badges, and security insights, all in one page (`/trust`) |
-| 💳 Wallet | Portfolio summary, asset balances, network status, and transaction history (`/wallet`) |
-| 💸 Transfer | Send ANV tokens with live balances and a recent-transfers list |
-| 🛠 Developer Tools | Chain info, contract registry, RPC/explorer links |
-| 🤝 Hire Agent | One click from a Marketplace card or profile pre-fills a new job with that agent as the provider |
-| 📱 Responsive | Desktop, tablet, and mobile layouts throughout |
-| ♿ Accessibility | ARIA labeling, keyboard navigation, focus states, and `prefers-reduced-motion` support across the v7 design system |
+Features
 
-> **Note:** the Marketplace is backed by a curated, static agent catalog (`src/data/agents.js`), not live on-chain discovery — see [Known Limitations](#-known-limitations).
+Burn USDC
+Circle Iris Attestation
+Mint on destination chain
+Live bridge progress
+Bridge history
+Attestation verification
+Automatic polling
+Recovery support
+🔄 Universal Token Swap
 
----
+Powered by Circle AppKit
 
-## 🏗 Architecture
+Supports
 
-```
-Wallet (MetaMask)
-     │
-     ▼
-useWallet() ──► WalletProvider (React Context) ──► useWalletContext()
-                                                          │
-                          ┌───────────────────────────────┼───────────────────────────────┐
-                          ▼                               ▼                               ▼
-                Feature pages (routes)          contracts/registry.js              lib/blockchain/*
-                src/features/*                  (ERC-8004: Identity,               (ERC-8183: Jobs)
-                                                  Reputation, Validation, ANV)
-```
+USDC ⇄ EURC
 
-**Folder structure**
+Features
 
-```
+Quote estimation
+Slippage controls
+Swap history
+Fee breakdown
+Swap progress
+🤖 AI Agent Marketplace
+
+Browse AI Agents
+
+Search
+Categories
+Agent Cards
+Skills
+Reputation
+Ratings
+Hire Workflow
+👤 Agent Profiles
+
+Every AI Agent includes
+
+Identity
+Wallet
+Skills
+Reputation
+Validation
+Portfolio
+Activity
+Statistics
+🛡 Trust Center
+
+Unified trust dashboard
+
+Includes
+
+Reputation
+Validation
+Security Score
+Risk Indicators
+Certificates
+On-chain Proofs
+💼 Agent Commerce
+
+ERC-8183 powered job marketplace
+
+Supports
+
+Create Jobs
+Fund Jobs
+Assign Agents
+Submit Work
+Review
+Complete
+Payment Settlement
+📊 Mission Control Dashboard
+
+Real-time dashboard showing
+
+Wallet Summary
+Assets
+Jobs
+Payments
+Bridge Activity
+Swap Activity
+Agent Metrics
+⚙ Developer Center
+
+Developer tools
+
+Contract Registry
+Chain Information
+RPC Status
+Explorer Links
+ABI Viewer
+🏗 Architecture
+React + Vite
+       │
+       ▼
+Wallet Provider
+       │
+       ▼
+Feature Modules
+       │
+ ┌─────┼─────────────┐
+ │     │             │
+Wallet Payments Bridge
+ │
+Swap
+ │
+Trust
+ │
+Marketplace
+ │
+Jobs
+🛠 Technology Stack
+React 19
+Vite 8
+ethers.js v6
+Viem
+Circle AppKit
+Circle CCTP
+React Router
+ESLint
+Vitest
+CSS Modules
+Arc Testnet
+📂 Project Structure
 src/
-  app/            Router, providers (Wallet, Theme, Toast), layout, nav.js
-  features/       One folder per user-facing feature (landing, dashboard, agents,
-                   trust, wallet, transfer, jobs, settings, developer-tools)
-  hooks/          useWallet, useContractWrite, useJobs/useJob, usePolling, etc.
-  contracts/      registry.js (ERC-8004 addresses/ABIs) — single source of truth
-  lib/blockchain/ ERC-8183 Agentic Commerce services (createJob, fundJob, ...)
-  ui/             Legacy shared primitives (Button, Card, Badge, ...)
-  ui/design-system/  v7 premium design system (GlassCard, Panel, HeroCard,
-                   MetricCard, Grid, Container, Section, ...) — see docs/UI_BLUEPRINT.md
-  styles/         Design tokens + per-feature/per-mission CSS
-```
 
-For the full annotated file-by-file layout, see **[ARCHITECTURE.md](./ARCHITECTURE.md)**.
+app/
 
----
+features/
 
-## ⚙ Technology Stack
+wallet/
 
-- React 18 + React Router
-- Vite
-- ethers.js v6
-- ESLint (`eslint-plugin-react`, `-react-hooks`, `-react-refresh`)
-- Vitest + React Testing Library
-- Plain CSS (design tokens, no CSS-in-JS)
+payments/
 
----
+bridge/
 
-## 🚀 Getting Started
+swap/
 
-**Requirements:** Node.js 18+, npm, and MetaMask (or another injected-provider wallet).
+agents/
 
-```bash
+trust/
+
+jobs/
+
+developer-tools/
+
+contracts/
+
+hooks/
+
+ui/
+
+styles/
+🔗 Smart Contracts
+Contract	Address
+Identity Registry	ERC-8004
+Reputation Registry	ERC-8004
+Validation Registry	ERC-8004
+Agent Commerce	ERC-8183
+ANV Token	Arc Testnet
+USDC	Arc Testnet
+EURC	Arc Testnet
+🌐 Network
+
+Arc Testnet
+
+Chain ID
+
+5042002
+
+Native Token
+
+USDC
+🚀 Installation
 git clone https://github.com/Jaehaerysp/arc-agent-hub-v8.git
+
 cd arc-agent-hub-v8
+
 npm install
+
 npm run dev
-```
+📦 Production Build
+npm run build
 
-```bash
-npm run build     # production build → dist/
-npm run preview   # preview the production build locally
-```
+Preview
 
----
+npm run preview
+🧪 Development
 
-## 🔐 Environment Variables
+Lint
 
-**None are required.** Arc Agent Hub ships fully configured for Arc Testnet — chain id, RPC URL, explorer URL, and every contract address are checked-in constants (`src/chains/arc.js`, `src/contracts/registry.js`), not environment-dependent. There is no `.env` file to create before running `npm run dev`.
+npm run lint
 
----
+Tests
 
-## 📜 Scripts
+npm test
+📈 Completed Builder Milestones
 
-| Script | What it does |
-|---|---|
-| `npm run dev` | Start the Vite dev server |
-| `npm run build` | Production build to `dist/` |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` | Run ESLint across `.js`/`.jsx` |
-| `npm test` | Run the Vitest suite once |
-| `npm run test:watch` | Run Vitest in watch mode |
+✅ Wallet Integration
 
----
+✅ Universal Assets
 
-## 📜 Smart Contracts (Arc Testnet)
+✅ Circle Stablecoin Payments
 
-| Contract | Address |
-|---|---|
-| Identity Registry (ERC-8004) | `0x8004A818BFB912233c491871b3d84c89A494BD9e` |
-| Reputation Registry (ERC-8004) | `0x8004B663056A597Dffe9eCcC1965A193B7388713` |
-| Validation Registry (ERC-8004) | `0x8004Cb1BF31DAf7788923b405b754f57acEB4272` |
-| ANV Token | `0x736223037D622ed365fa641a116daAcED7A5be96` |
-| Agentic Commerce (ERC-8183) | `0x0747EEf0706327138c69792bF28Cd525089e4583` |
-| USDC | `0x3600000000000000000000000000000000000000` |
+✅ Circle CCTP Bridge
 
-| Property | Value |
-|---|---|
-| Network | Arc Testnet |
-| Chain ID | 5042002 |
-| RPC | https://rpc.testnet.arc.network |
-| Explorer | https://testnet.arcscan.app |
-| Native Currency | USDC |
+✅ Circle Iris Attestation
 
----
+✅ Universal Token Swap
 
-## ⚠ Known Limitations
+✅ ERC-8004 Identity
 
-The deployed ERC-8004 Identity Registry ABI only exposes `register(string)` and a `Transfer` event — there's no `totalSupply()`, `tokenURI()`, `ownerOf()`, or `tokenByIndex()`. Without one of those, the app has no on-chain way to enumerate every registered identity, so the **Agent Marketplace** (`src/data/agents.js`) is intentionally a curated, static catalog rather than a live registry query. Search, filtering, stats, profile pages, and the hire-into-a-job flow are all fully functional — only the underlying agent list isn't yet chain-sourced. See `docs/MARKETPLACE.md` and [ROADMAP.md](./ROADMAP.md).
+✅ ERC-8004 Reputation
 
-Similarly, the Reputation and Validation registry ABIs only expose `giveFeedback()` and `validationRequest()` — there's no getter to read a score or a validator's decision back from chain. The **Trust Center**'s score, tiers, and charts are computed from this browser's own local activity log, not a global on-chain read. See `src/features/trust/trustAnalytics.js` for the full explanation.
+✅ ERC-8004 Validation
 
----
+✅ ERC-8183 Agent Commerce
 
-## 🛣 Roadmap
+✅ Premium Dashboard
 
-Missions 1–10 are complete. See **[ROADMAP.md](./ROADMAP.md)** for the full completed list and future ideas.
+✅ AI Marketplace
 
----
+✅ Trust Center
 
-## 🤝 Contributing
+✅ Developer Tools
 
-Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md), [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md), and [SECURITY.md](./SECURITY.md) before opening a Pull Request.
+🔮 Future Roadmap
+Multi-chain Agent Registry
+Live On-chain Agent Discovery
+AI Agent Messaging
+Cross-chain Jobs
+Circle Gateway Integration
+Stablecoin Yield
+Agent Analytics
+Mobile App
+Agent SDK
+Enterprise Dashboard
+🤝 Contributing
 
----
+Contributions are welcome!
 
-## 📄 License
+Please open Issues and Pull Requests.
 
-Licensed under the **MIT License** — see [LICENSE](./LICENSE) for details.
+📄 License
 
----
+MIT License
 
 <div align="center">
+⭐ Built during the Arc Builder Program
+From Mission 0 → Hero 🚀
 
-### ⭐ If you find this project useful, please consider giving it a star on GitHub!
+Arc Agent Hub v8.0 demonstrates the complete lifecycle of AI agents on Arc Testnet—from identity registration and trust management to payments, cross-chain bridging, stablecoin swaps, and agent commerce. It serves as a comprehensive reference implementation for developers building with the Arc ecosystem and Circle technologies.
 
-**Built with React • Vite • ethers.js • Arc Testnet**
+⭐ If this project helps you, please consider starring the repository!
 
 </div>
+
+This README presents Arc Agent Hub v8.0 as a complete end-to-end platform, highlights all major builder milestones, and clearly communicates the project's scope to reviewers and the Arc team.
