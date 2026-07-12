@@ -1,12 +1,18 @@
-<div className="flex h-screen">
-    <Sidebar />
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
 
-    <div className="flex flex-1 flex-col">
+export default function MainContent({ children }) {
+  return (
+    <div className="flex h-screen">
+      <Sidebar />
+
+      <div className="flex flex-1 flex-col">
         <Topbar />
 
         <main className="flex-1 overflow-auto">
-            {children}
+          {children}
         </main>
-
+      </div>
     </div>
-</div>
+  );
+}

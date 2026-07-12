@@ -337,9 +337,10 @@ export async function pollAttestation({
   }
 
   const startedAt = Date.now();
+  const deadline = startedAt + timeoutMs;
   let attempt = 0;
 
-  while (true) {
+  while (Date.now() < deadline) {
     if (shouldCancel?.()) return { cancelled: true };
 
     attempt += 1;
@@ -473,13 +474,14 @@ export async function pollAttestation({
       // treated as transient and retried until the timeout below.
     }
 
-    if (Date.now() - startedAt >= timeoutMs) {
-      return {
-        error: "Timed out waiting for Circle's attestation after 5 minutes. Your burn is already confirmed on Arc Testnet — you can safely retry the mint later with the same burn transaction.",
-        timedOut: true,
-      };
-    }
+  await new Promise((resolve) => setTimeout(resolve, intervalMs));
 
-    await new Promise((resolve) => setTimeout(resolve, intervalMs));
-  }
+}
+
+return {
+  error:
+    "Timed out waiting for Circle's attestation after 5 minutes. Your burn is already confirmed on Arc Testnet — you can safely retry the mint later with the same burn transaction.",
+  timedOut: true,
+ };
+
 }
