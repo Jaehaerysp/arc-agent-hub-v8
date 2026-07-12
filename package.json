@@ -20,13 +20,13 @@
     "marketplace",
     "onchain-identity"
   ],
-  "homepage": "https://github.com/Jaehaerysp/arc-agent-hub-v7#readme",
+  "homepage": "https://github.com/Jaehaerysp/arc-agent-hub-v8#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jaehaerysp/arc-agent-hub-v7.git"
+    "url": "git+https://github.com/Jaehaerysp/arc-agent-hub-v8.git"
   },
   "bugs": {
-    "url": "https://github.com/Jaehaerysp/arc-agent-hub-v7/issues"
+    "url": "https://github.com/Jaehaerysp/arc-agent-hub-v8/issues"
   },
   "author": "Arc Agent Hub contributors",
   "license": "MIT",
