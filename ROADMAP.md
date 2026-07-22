@@ -1,6 +1,6 @@
 # Roadmap
 
-## Completed — Missions 1–10 (v7.0.0)
+## Completed — Missions 1–10 (v8.0.0)
 
 | Mission | Summary |
 |---|---|
