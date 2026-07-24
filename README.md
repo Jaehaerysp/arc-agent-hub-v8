@@ -1,309 +1,289 @@
-<div align="center">
+# 🚀 ARC_AGENT_HUB
 
-<img src=".github/assets/logo.png" alt="Arc Agent Hub v8" width="88" />
+> **AI Workforce Platform built on Arc Network**
 
-<img src=".github/assets/banner.png" alt="Arc Agent Hub v8" width="100%" />
+Build, Deploy, and Manage Autonomous AI Agents using **Circle Developer
+Platform**, **Native USDC**, **ERC-8004 Identity**, **ERC-8183 Agentic
+Commerce**, and **Arc Network**.
 
-# 🚀 Arc Agent Hub v8.0
+> **Brand Notice**
+>
+> ARC_AGENT_HUB is an independent open-source project built on **Arc
+> Network**.
+>
+> Arc is a trademark of Circle.
+>
+> This project is not affiliated with, endorsed by, or sponsored by
+> Circle unless explicitly stated.
 
-### A Premium AI Agent Operations Dashboard Powered by Circle AppKit, ERC-8004, ERC-8183 & Arc Testnet
+------------------------------------------------------------------------
 
-**Version 8.0.0 – Sprint 4 Complete**
+## 📚 Table of Contents
 
-Arc Agent Hub is a production-ready, open-source developer platform demonstrating how to build modern AI-powered Web3 applications on **Arc Testnet** using **Circle AppKit**, **ERC-8004 AI Identity**, **ERC-8183 Agentic Commerce**, **Circle CCTP Bridge**, **Universal Wallet**, **Universal Payments**, and **Universal Token Swap**.
+-   Overview
+-   Why ARC_AGENT_HUB?
+-   Project Vision
+-   Development Journey
+-   Platform Features
+-   Platform Highlights
+-   Project Statistics
 
-<p align="center">
-
-[![Build](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/build.yml/badge.svg)](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/build.yml)
-[![Lint](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/lint.yml/badge.svg)](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/lint.yml)
-[![Tests](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/test.yml/badge.svg)](https://github.com/Jaehaerysp/arc-agent-hub-v8/actions/workflows/test.yml)
-[![Version](https://img.shields.io/badge/version-8.0.0-7c3aed?style=flat-square)](./CHANGELOG.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite)](https://vitejs.dev)
-[![Circle](https://img.shields.io/badge/Circle-AppKit-1B6FFF)](https://developers.circle.com/)
-[![ethers.js](https://img.shields.io/badge/ethers.js-v6-2535A0)](https://docs.ethers.org)
-[![Arc](https://img.shields.io/badge/Network-Arc%20Testnet-7c3aed)](https://arc.net)
-
-</p>
-
-**📖 [Architecture](./ARCHITECTURE.md) • 📝 [Changelog](./CHANGELOG.md) • 🛣 [Roadmap](./ROADMAP.md) • 🤝 [Contributing](./CONTRIBUTING.md) • 📚 [Documentation](./docs/OVERVIEW.md)**
-
-</div>
-
----
+------------------------------------------------------------------------
 
 # 🌟 Overview
 
-Arc Agent Hub is a complete **AI Agent Operations Dashboard** designed for developers building on **Arc Testnet**.
+ARC_AGENT_HUB is an open-source AI Workforce Platform built on **Arc
+Network**.
 
-Instead of demonstrating a single feature, Arc Agent Hub combines the complete Arc developer stack into one production-ready application.
+The platform demonstrates how developers can build modern autonomous AI
+applications using Arc Network together with the Circle Developer
+Platform.
 
-The platform integrates:
+Rather than showcasing a single feature, ARC_AGENT_HUB combines
+identity, wallets, stablecoin payments, agent commerce, validation,
+reputation, developer tooling, and cross-chain infrastructure into a
+unified developer experience.
 
-- 🤖 ERC-8004 AI Identity Protocol
-- 💼 ERC-8183 Agentic Commerce
-- ⭕ Circle AppKit SDK
-- 🌉 Circle CCTP V2
-- 💳 Universal Wallet
-- 💸 Universal Payments
-- 🔄 Universal Token Swap
-- 🛡 Trust Center
-- 📊 Portfolio Analytics
-- 🛒 AI Agent Marketplace
-- 📈 Mission Control Dashboard
+Core capabilities include:
 
-Everything is built using a scalable **React + Vite** architecture with reusable components, feature-based organization, responsive layouts, and a premium design system.
+-   🤖 AI Agent Management
+-   👛 Universal Wallet
+-   💳 Stablecoin Payments
+-   🔄 Universal Token Swap
+-   🌉 Cross-chain USDC Transfers
+-   🛡 Reputation & Validation
+-   📈 Mission Control Dashboard
+-   🛠 Developer Tools
 
----
+------------------------------------------------------------------------
+
+# 💡 Why ARC_AGENT_HUB?
+
+Building decentralized AI applications typically requires integrating
+multiple blockchain services, wallets, payment systems, identity
+protocols, and developer tools.
+
+ARC_AGENT_HUB brings these components together into a single modular
+platform.
+
+It is intended for:
+
+-   Arc builders
+-   Circle developers
+-   Web3 developers
+-   AI application developers
+-   Hackathon participants
+-   Open-source contributors
+
+------------------------------------------------------------------------
 
 # 🎯 Project Vision
 
-Arc Agent Hub demonstrates what a modern AI-powered Web3 application should look like.
+ARC_AGENT_HUB demonstrates what a modern AI-native Web3 application
+should look like when built on Arc Network.
 
-Rather than focusing on individual smart contracts, it showcases an integrated developer experience combining identity, commerce, payments, wallets, cross-chain infrastructure, and stablecoin operations into a single application.
+Goals:
 
-The project is intended to serve as:
+-   Promote stablecoin-native development
+-   Demonstrate Circle Developer Platform integrations
+-   Showcase AI agent infrastructure
+-   Encourage open-source collaboration
+-   Accelerate developer adoption of Arc Network
 
-- Reference implementation for Arc developers
-- Circle AppKit integration example
-- ERC-8004 implementation showcase
-- ERC-8183 Agent Commerce demo
-- Production-ready React architecture
-- Open-source learning resource
-
----
+------------------------------------------------------------------------
 
 # 🚀 Development Journey
 
-Arc Agent Hub has been built incrementally through multiple production sprints.
+ARC_AGENT_HUB has evolved through multiple production-focused
+development sprints.
 
-| Sprint | Status | Deliverables |
-|---------|--------|--------------|
-| 🏗 Sprint 0 | ✅ Complete | Project architecture, React foundation, routing, design system |
-| 👛 Sprint 1 | ✅ Complete | Universal Wallet, Portfolio, Transaction History |
-| 💳 Sprint 2 | ✅ Complete | Universal Payments, Token Transfers, Circle Payments |
-| 🌉 Sprint 3 | ✅ Complete | Circle CCTP Bridge, Iris Attestation, Cross-chain USDC |
-| 🔄 Sprint 4 | ✅ Complete | Universal Token Swap powered by Circle AppKit |
+  Sprint     Status   Highlights
+  ---------- -------- -----------------------------------
+  Sprint 0   ✅       Foundation, routing, architecture
+  Sprint 1   ✅       Universal Wallet
+  Sprint 2   ✅       Stablecoin Payments
+  Sprint 3   ✅       Circle CCTP Bridge
+  Sprint 4   ✅       Universal Token Swap
 
----
+------------------------------------------------------------------------
 
 # ✨ Platform Features
 
 ## 🤖 AI Agent Platform
 
-- ERC-8004 Identity Registry
-- Reputation Registry
-- Validation Registry
-- AI Agent Marketplace
-- Agent Discovery
-- Individual Agent Profiles
-- Agent Hiring Workflow
-- Agent Reputation Dashboard
-
----
+-   ERC-8004 Identity Registry
+-   Reputation Registry
+-   Validation Registry
+-   AI Agent Marketplace
+-   Agent Profiles
 
 ## 💼 Agent Commerce
 
-- ERC-8183 Job Lifecycle
-- Job Creation
-- Budget Management
-- Funding Workflow
-- Submission Review
-- Job Completion
-- Job History
-- Job Analytics
+-   ERC-8183 Job Lifecycle
+-   Job Creation
+-   Funding Workflow
+-   Job Analytics
 
----
+## 👛 Wallet Center
 
-## 👛 Universal Wallet
+-   Wallet Connection
+-   Portfolio Dashboard
+-   Asset Balances
+-   Transaction History
 
-- Wallet Connection
-- Portfolio Dashboard
-- Asset Balances
-- Token Holdings
-- Network Status
-- Transaction History
-- Wallet Analytics
+## 💳 Stablecoin Payments
 
----
+-   Native USDC Transfers
+-   Payment History
+-   Wallet Integration
 
-## 💳 Universal Payments
+## 🌉 Circle CCTP
 
-- Send Stablecoins
-- Transfer Tokens
-- Payment History
-- Transaction Confirmation
-- Wallet Integration
-
----
-
-## 🌉 Circle CCTP Bridge
-
-- Native USDC Bridge
-- Cross-chain Transfers
-- Circle Iris Attestation
-- Burn / Mint Flow
-- Bridge History
-- Real-time Progress Tracking
-
----
+-   Cross-chain USDC
+-   Iris Attestation
+-   Burn / Mint Workflow
 
 ## 🔄 Universal Token Swap
 
-- Circle AppKit Integration
-- USDC ⇄ EURC Swaps
-- Live Quote Engine
-- Slippage Controls
-- Swap Settings
-- Swap History
-- Quote Refresh
-- Price Impact
-- Route Information
-
----
+-   Circle AppKit
+-   Quote Engine
+-   Swap History
 
 ## 🛡 Trust Center
 
-- Validation Status
-- Reputation Score
-- Trust Analytics
-- Achievement Badges
-- Security Insights
-- Certificate History
-
----
+-   Reputation
+-   Validation
+-   Security Insights
 
 ## 📊 Mission Control
 
-- Dashboard Overview
-- Wallet Summary
-- Portfolio Statistics
-- Recent Activity
-- Job Metrics
-- System Health
-- Developer Insights
+-   Dashboard
+-   Portfolio
+-   Analytics
+-   System Health
 
----
+## 🛠 Developer Tools
 
-## 🛠 Developer Experience
+-   Smart Contract Registry
+-   RPC Configuration
+-   Explorer Links
 
-- Smart Contract Registry
-- Chain Information
-- Explorer Links
-- RPC Configuration
-- Contract Addresses
-- Debug Utilities
-- Developer Tools
+------------------------------------------------------------------------
 
----
+# ⭐ Platform Highlights
 
-## 🎨 User Experience
+-   Built on Arc Network
+-   Circle Developer Platform
+-   Native USDC
+-   Universal Wallet
+-   Stablecoin Payments
+-   Universal Token Swap
+-   Circle CCTP
+-   ERC-8004
+-   ERC-8183
+-   AI Marketplace
+-   Production-ready React Architecture
+-   Open Source
 
-- Premium UI
-- Responsive Design
-- Mobile Friendly
-- Tablet Support
-- Dark Theme
-- Accessibility Support
-- Keyboard Navigation
-- Reduced Motion Support
-- Glassmorphism Design
-- Reusable Design System
+------------------------------------------------------------------------
 
----
+# 📊 Project Statistics
 
-# ⭐ Highlights
+  Metric                                  Value
+  --------------------- -----------------------
+  Version                                   8.1
+  Development Sprints                         5
+  Major Features                            12+
+  React Components                         150+
+  Feature Modules                           10+
+  Circle Integrations                         4
+  Network                 Arc Network (Testnet)
 
-✔ Circle AppKit SDK Integration
+------------------------------------------------------------------------
 
-✔ Circle CCTP V2 Bridge
+**End of README Part 1**
 
-✔ Universal Wallet
-
-✔ Universal Payments
-
-✔ Universal Token Swap
-
-✔ ERC-8004 AI Identity
-
-✔ ERC-8183 Agent Commerce
-
-✔ AI Marketplace
-
-✔ Mission Control Dashboard
-
-✔ Production React Architecture
-
-✔ Feature-based Project Structure
-
-✔ Modern Developer Experience
-
-✔ Open Source
-
----
-
-# 📈 Platform Statistics
-
-| Category | Count |
-|-----------|------:|
-| Development Sprints | **5** |
-| Major Platform Modules | **12+** |
-| React Components | **150+** |
-| Feature Modules | **10+** |
-| Smart Contract Integrations | **6** |
-| Circle Integrations | **4** |
-| Supported Stablecoins | **USDC / EURC** |
-| Network | **Arc Testnet** |
-
----
+➡️ Continue with **README_Part2.md** for System Architecture, Project
+Structure, Technology Stack, Circle Developer Platform Integration,
+Smart Contracts, and Network Configuration.
 # 🏗 System Architecture
 
-Arc Agent Hub follows a scalable **feature-based architecture** designed for modern Web3 applications.
+ARC_AGENT_HUB follows a modular, feature-first architecture designed for
+scalable AI-powered Web3 applications built on **Arc Network**.
 
-```text
-                              MetaMask / Rabby Wallet
-                                         │
-                                         ▼
-                           Wallet Provider (React Context)
-                                         │
-      ┌──────────────────────────────────┼──────────────────────────────────┐
-      ▼                                  ▼                                  ▼
- Mission Control                  AI Agent Platform                   Wallet Center
- Dashboard                         ERC-8004 Suite                     Portfolio
-                                         │
-                                         ▼
-────────────────────────────────────────────────────────────────────────────────────
+``` text
+                               Users
+                                 │
+                   MetaMask / Rabby Wallet
+                                 │
+                                 ▼
+──────────────────────────────────────────────────────────────
+                    ARC_AGENT_HUB Frontend
+──────────────────────────────────────────────────────────────
+React 18 • Vite • React Router • Context API • Viem
 
-                    Circle AppKit SDK Integration
+──────────────────────────────────────────────────────────────
+                  Core Platform Modules
+──────────────────────────────────────────────────────────────
+• Mission Control Dashboard
+• AI Agent Platform
+• Wallet Center
+• Stablecoin Payments
+• Universal Token Swap
+• Circle CCTP Bridge
+• Reputation Center
+• Validation Center
+• Agent Marketplace
+• Developer Tools
 
-      Wallet │ Payments │ Universal Swap │ Stablecoin Operations
+──────────────────────────────────────────────────────────────
+               Blockchain Service Layer
+──────────────────────────────────────────────────────────────
+Wallet Services
+Payment Services
+Swap Services
+Bridge Services
+Smart Contract Services
+RPC Services
 
-────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────
+         Circle Developer Platform Integration
+──────────────────────────────────────────────────────────────
+Circle AppKit
+Universal Wallet
+Stablecoin Payments
+Universal Token Swap
+Circle CCTP V2
+Iris Attestation
 
-                        Circle CCTP V2 Bridge Center
-
-          Burn USDC → Iris Attestation → Mint USDC
-
-────────────────────────────────────────────────────────────────────────────────────
-
-               ERC-8183 Agentic Commerce Platform
-
- Marketplace → Jobs → Funding → Completion → Reputation
-
-────────────────────────────────────────────────────────────────────────────────────
-
-                         Arc Testnet Infrastructure
-
-             Identity │ Reputation │ Validation │ Payments │ Bridge
+──────────────────────────────────────────────────────────────
+                     Arc Network
+──────────────────────────────────────────────────────────────
+ERC-8004 Identity
+ERC-8183 Agentic Commerce
+Native USDC
+Smart Contracts
+Arc RPC
+Arc Explorer
 ```
 
----
+## Architecture Principles
+
+-   Modular feature-based design
+-   Reusable components
+-   Separation of concerns
+-   Blockchain abstraction
+-   Scalable React architecture
+-   Secure wallet integration
+-   Responsive UI
+-   Production-ready project structure
+
+------------------------------------------------------------------------
 
 # 📂 Project Structure
 
-```
-Arc-Agent-Hub-v8/
+``` text
+ARC_AGENT_HUB/
 
 ├── .github/
 │   ├── workflows/
@@ -311,9 +291,12 @@ Arc-Agent-Hub-v8/
 │   └── assets/
 │
 ├── docs/
+│   ├── architecture/
+│   ├── api/
+│   ├── screenshots/
+│   └── guides/
 │
 ├── public/
-│
 ├── server/
 │   ├── config/
 │   ├── middleware/
@@ -322,35 +305,12 @@ Arc-Agent-Hub-v8/
 │   └── app.js
 │
 ├── src/
-│
 │   ├── app/
-│   │     ├── layout/
-│   │     ├── providers/
-│   │     └── router/
-│   │
 │   ├── assets/
-│   │
 │   ├── chains/
-│   │
 │   ├── contracts/
-│   │
 │   ├── features/
-│   │
-│   │     ├── agents/
-│   │     ├── bridge/
-│   │     ├── dashboard/
-│   │     ├── developer-tools/
-│   │     ├── jobs/
-│   │     ├── landing/
-│   │     ├── payments/
-│   │     ├── settings/
-│   │     ├── swap/
-│   │     ├── transfer/
-│   │     ├── trust/
-│   │     └── wallet/
-│   │
 │   ├── hooks/
-│   ├── lib/
 │   ├── services/
 │   ├── styles/
 │   ├── ui/
@@ -361,471 +321,395 @@ Arc-Agent-Hub-v8/
 └── README.md
 ```
 
----
+## Folder Overview
+
+  Folder      Purpose
+  ----------- -------------------------------
+  app         Bootstrap, routing, providers
+  assets      Images, fonts, icons
+  chains      Arc Network configuration
+  contracts   Smart contract ABIs
+  docs        Documentation
+  features    Business modules
+  hooks       Custom React hooks
+  services    Blockchain integrations
+  ui          Shared UI components
+  utils       Helper utilities
+  server      Backend services
+
+------------------------------------------------------------------------
 
 # ⚙ Technology Stack
 
-| Category | Technology |
-|-----------|------------|
-| Frontend | React 18 |
-| Build Tool | Vite 8 |
-| Language | JavaScript ES2023 |
-| Routing | React Router |
-| Blockchain | ethers.js v6 |
-| Web3 Client | viem |
-| Wallet | MetaMask / Rabby |
-| Stablecoins | Circle AppKit SDK |
-| Cross-chain | Circle CCTP V2 |
-| Backend | Express.js |
-| Styling | CSS Design System |
-| Testing | Vitest |
-| Linting | ESLint |
-| Deployment | Vercel |
-| Source Control | Git + GitHub |
+  Layer            Technology
+  ---------------- ---------------------
+  Frontend         React 18
+  Build Tool       Vite 8
+  Language         JavaScript (ES2023)
+  Routing          React Router
+  State            React Context API
+  Web3             Viem
+  Blockchain       ethers.js v6
+  Wallets          MetaMask, Rabby
+  Backend          Express.js
+  Testing          Vitest
+  Linting          ESLint
+  Deployment       Vercel
+  Source Control   Git + GitHub
 
----
+## Blockchain Standards
+
+-   ERC-8004 AI Identity
+-   ERC-8183 Agentic Commerce
+-   ERC-20
+-   Native USDC
+-   Circle CCTP V2
+
+------------------------------------------------------------------------
 
 # ⭕
 
 # Circle Developer Platform Integration
 
-Arc Agent Hub demonstrates multiple Circle developer products inside a single application.
+ARC_AGENT_HUB demonstrates practical integration of Circle Developer
+Platform products.
 
-| Circle Product | Status |
-|---------------|--------|
-| Circle AppKit SDK | ✅ |
-| Universal Wallet | ✅ |
-| Stablecoin Payments | ✅ |
-| Universal Token Swap | ✅ |
-| Circle CCTP Bridge | ✅ |
-| Circle Iris Attestation | ✅ |
-| Cross-chain USDC | ✅ |
+  Product                Purpose
+  ---------------------- ---------------------------------------------
+  Circle AppKit          Wallet connectivity & stablecoin operations
+  Universal Wallet       Wallet management
+  Stablecoin Payments    Native USDC transfers
+  Universal Token Swap   Token swapping
+  Circle CCTP V2         Cross-chain USDC
+  Iris Attestation       Message verification
 
----
+## Integration Flow
 
-## Circle AppKit
-
-Arc Agent Hub integrates Circle AppKit for modern stablecoin operations.
-
-Supported capabilities include
-
-- Universal Wallet
-- Stablecoin Payments
-- Token Swap
-- Quote Service
-- Wallet Adapter
-- Balance Management
-
----
-
-## Circle CCTP V2
-
-The Bridge Center demonstrates native Circle Cross-Chain Transfer Protocol.
-
-Workflow
-
-```
-USDC
-
-↓
-
-Burn
-
-↓
-
-Circle Iris
-
-↓
-
-Attestation
-
-↓
-
-Mint
-
-↓
-
-Destination Chain
+``` text
+ARC_AGENT_HUB
+      │
+      ▼
+Circle AppKit
+      │
+ ┌────┼──────────────┐
+ ▼    ▼              ▼
+Wallet Payments   Token Swap
+      │
+      ▼
+Circle CCTP V2
+      │
+      ▼
+Iris Attestation
+      │
+      ▼
+Arc Network
 ```
 
-Features
+## Stablecoin Workflow
 
-- Native USDC Burn
-- Native USDC Mint
-- Iris Polling
-- Message Validation
-- Bridge History
-- Real-time Progress
+``` text
+Native USDC
+     │
+     ▼
+Transfer / Swap / Bridge
+     │
+     ▼
+Circle Services
+     │
+     ▼
+Arc Network
+```
 
----
+------------------------------------------------------------------------
 
 # 📜 Smart Contracts
 
-| Contract | Standard |
-|-----------|----------|
-| Identity Registry | ERC-8004 |
-| Reputation Registry | ERC-8004 |
-| Validation Registry | ERC-8004 |
-| Agent Commerce | ERC-8183 |
-| ANV Token | ERC-20 |
-| Circle USDC | Native Stablecoin |
+  Contract              Standard
+  --------------------- ------------
+  Identity Registry     ERC-8004
+  Reputation Registry   ERC-8004
+  Validation Registry   ERC-8004
+  Agent Commerce        ERC-8183
+  ANV Token             ERC-20
+  Native USDC           Stablecoin
 
----
+------------------------------------------------------------------------
 
-## Arc Testnet Contracts
+# 🌐 Arc Network Configuration
 
-| Contract | Address |
-|-----------|---------|
-| Identity Registry | `0x8004A818BFB912233c491871b3d84c89A494BD9e` |
-| Reputation Registry | `0x8004B663056A597Dffe9eCcC1965A193B7388713` |
-| Validation Registry | `0x8004Cb1BF31DAf7788923b405b754f57acEB4272` |
-| Agent Commerce | `0x0747EEf0706327138c69792bF28Cd525089e4583` |
-| ANV Token | `0x736223037D622ed365fa641a116daAcED7A5be96` |
-| Native USDC | `0x3600000000000000000000000000000000000000` |
+  Property          Value
+  ----------------- ---------------------------------
+  Network           Arc Network (Testnet)
+  Chain ID          5042002
+  Native Currency   USDC
+  RPC               https://rpc.testnet.arc.network
+  Explorer          https://testnet.arcscan.app
 
----
+------------------------------------------------------------------------
 
-# 🌐 Arc Testnet
+**End of README Part 2**
 
-| Property | Value |
-|-----------|-------|
-| Network | Arc Testnet |
-| Chain ID | 5042002 |
-| Native Currency | USDC |
-| RPC | https://rpc.testnet.arc.network |
-| Explorer | https://testnet.arcscan.app |
-
----
-
+➡ Continue with **README_Part3.md** for installation, screenshots,
+roadmap, contribution guide, security, documentation, license, and
+footer.
 # 🚀 Getting Started
 
-## Requirements
+## Prerequisites
 
-- Node.js 20+
-- npm
-- MetaMask or Rabby Wallet
+-   Node.js 20+
+-   npm
+-   MetaMask or Rabby Wallet
+-   Access to Arc Network (Testnet)
 
----
+------------------------------------------------------------------------
 
-### Clone Repository
+## Clone the Repository
 
-```bash
+``` bash
 git clone https://github.com/Jaehaerysp/arc-agent-hub-v8.git
-
 cd arc-agent-hub-v8
 ```
 
----
+------------------------------------------------------------------------
 
-### Install Dependencies
+## Install Dependencies
 
-```bash
+``` bash
 npm install
 ```
 
----
+------------------------------------------------------------------------
 
-### Start Development
+## Start Development Server
 
-```bash
+``` bash
 npm run dev
 ```
 
----
+Open:
 
-### Production Build
+    http://localhost:5173
 
-```bash
+------------------------------------------------------------------------
+
+## Production Build
+
+``` bash
 npm run build
 ```
 
----
+------------------------------------------------------------------------
 
-### Preview Production
+## Preview Production Build
 
-```bash
+``` bash
 npm run preview
 ```
 
----
+------------------------------------------------------------------------
 
 # 🔐 Environment Variables
 
-Most features are preconfigured for Arc Testnet.
+Create a `.env` file:
 
-Example
-
-```env
-VITE_CIRCLE_KIT_KEY=YOUR_KIT_KEY
+``` env
+VITE_CIRCLE_KIT_KEY=YOUR_CIRCLE_APPKIT_KEY
+VITE_ARC_RPC=https://rpc.testnet.arc.network
 ```
 
-Production deployments should proxy Circle AppKit requests through the backend to avoid exposing sensitive credentials.
+> For production deployments, proxy requests that require sensitive
+> credentials through a backend service.
 
----
+------------------------------------------------------------------------
 
 # 📜 Available Scripts
 
-| Command | Description |
-|----------|-------------|
-| npm run dev | Start development server |
-| npm run build | Production build |
-| npm run preview | Preview production build |
-| npm run lint | Run ESLint |
-| npm test | Execute tests |
-| npm run test:watch | Watch mode |
-| npm run format | Format source (optional) |
+  Command              Description
+  -------------------- --------------------------
+  npm run dev          Start development server
+  npm run build        Production build
+  npm run preview      Preview production build
+  npm run lint         Lint source code
+  npm test             Execute tests
+  npm run test:watch   Watch mode
 
----
+------------------------------------------------------------------------
+
 # 📸 Application Preview
 
-> **Screenshots will be added after each production release.**
+> Keep all of your existing screenshots in this section.
 
-| Landing Page | Dashboard |
-|---------------|-----------|
-| ![](docs/screenshots/landing.png) | ![](docs/screenshots/dashboard.png) |
+  ---------------------------------------------------------------------------
+  Landing                             Dashboard
+  ----------------------------------- ---------------------------------------
+  ![](docs/screenshots/landing.png)   ![](docs/screenshots/dashboard.png)
 
-| Wallet | AI Marketplace |
-|---------|----------------|
-| ![](docs/screenshots/wallet.png) | ![](docs/screenshots/marketplace.png) |
+  ---------------------------------------------------------------------------
 
-| Trust Center | Jobs |
-|--------------|------|
-| ![](docs/screenshots/trust.png) | ![](docs/screenshots/jobs.png) |
+  ------------------------------------------------------------------------------
+  Wallet                             Marketplace
+  ---------------------------------- -------------------------------------------
+  ![](docs/screenshots/wallet.png)   ![](docs/screenshots/marketplace.png)
 
-| Circle Payments | Circle Bridge |
-|-----------------|---------------|
-| ![](docs/screenshots/payments.png) | ![](docs/screenshots/bridge.png) |
+  ------------------------------------------------------------------------------
 
-| Universal Swap | Developer Tools |
-|----------------|-----------------|
-| ![](docs/screenshots/swap.png) | ![](docs/screenshots/developer-tools.png) |
+  Trust Center                      Jobs
+  --------------------------------- --------------------------------
+  ![](docs/screenshots/trust.png)   ![](docs/screenshots/jobs.png)
 
----
+  --------------------------------------------------------------------------
+  Payments                                Bridge
+  --------------------------------------- ----------------------------------
+  ![](docs/screenshots/payments.png)      ![](docs/screenshots/bridge.png)
 
-# 🚀 Development Roadmap
+  --------------------------------------------------------------------------
 
-## ✅ Completed
+  ------------------------------------------------------------------------------
+  Universal Swap                     Developer Tools
+  ---------------------------------- -------------------------------------------
+  ![](docs/screenshots/swap.png)     ![](docs/screenshots/developer-tools.png)
 
-| Sprint | Status | Highlights |
-|---------|--------|------------|
-| Sprint 0 | ✅ | Project foundation, routing, architecture |
-| Sprint 1 | ✅ | Universal Wallet Center |
-| Sprint 2 | ✅ | Universal Payments & Token Transfers |
-| Sprint 3 | ✅ | Circle CCTP Bridge & Iris Attestation |
-| Sprint 4 | ✅ | Universal Token Swap powered by Circle AppKit |
+  ------------------------------------------------------------------------------
 
----
+------------------------------------------------------------------------
 
-## 🔜 Planned
+# 🛣 Roadmap
 
-| Sprint | Focus |
-|---------|-------|
-| Sprint 5 | AI Agent Automation |
-| Sprint 6 | Circle Gateway Integration |
-| Sprint 7 | Production Deployment |
-| Sprint 8 | AI Copilot & Analytics |
-| Sprint 9 | Mobile Experience |
-| Sprint 10 | Enterprise Dashboard |
+  Sprint     Status   Focus
+  ---------- -------- ----------------------------
+  Sprint 0   ✅       Foundation
+  Sprint 1   ✅       Universal Wallet
+  Sprint 2   ✅       Stablecoin Payments
+  Sprint 3   ✅       Circle CCTP
+  Sprint 4   ✅       Universal Token Swap
+  Sprint 5   🔄       AI Agent Automation
+  Sprint 6   🔄       Circle Gateway Integration
+  Sprint 7   🔄       Production Deployment
+  Sprint 8   🔄       Analytics & AI Copilot
 
----
-
-# 📊 Project Statistics
-
-| Metric | Value |
-|---------|------:|
-| Version | **8.0.0** |
-| Development Sprints | **5** |
-| Major Features | **12+** |
-| React Components | **150+** |
-| Feature Modules | **10+** |
-| Smart Contract Integrations | **6** |
-| Circle Integrations | **4** |
-| Supported Stablecoins | **USDC / EURC** |
-| Network | **Arc Testnet** |
-
----
+------------------------------------------------------------------------
 
 # ⚠ Known Limitations
 
-Current limitations are primarily due to the available smart contract interfaces on Arc Testnet.
+Current limitations primarily reflect the available Arc Network testnet
+interfaces.
 
-### ERC-8004
+-   Some ERC-8004 registry read methods are unavailable.
+-   Reputation data may rely on local aggregation where on-chain getters
+    are unavailable.
+-   Universal Token Swap currently demonstrates AppKit integration on
+    Arc Network (Testnet).
+-   Additional routing and production proxy support are planned.
 
-Current registry contracts do not expose:
-
-- totalSupply()
-- ownerOf()
-- tokenURI()
-- tokenByIndex()
-
-Therefore, the Agent Marketplace currently uses a curated catalog instead of full on-chain discovery.
-
----
-
-### Reputation
-
-The Reputation Registry currently exposes write operations but not public read APIs.
-
-Trust scores shown in the dashboard are generated from local activity until on-chain getters become available.
-
----
-
-### Validation
-
-Validation status is limited by the current registry ABI.
-
-Future registry upgrades can expose richer validator metadata and historical validation records.
-
----
-
-### Universal Swap
-
-Universal Token Swap currently demonstrates Circle AppKit integration on Arc Testnet.
-
-Future releases will include:
-
-- Additional stablecoin pairs
-- Multi-route optimization
-- Advanced routing
-- Backend proxy support for production deployments
-
----
+------------------------------------------------------------------------
 
 # 🤝 Contributing
 
-Contributions are welcome!
+Contributions are welcome.
 
-If you would like to improve Arc Agent Hub:
-
-1. Fork the repository
-2. Create a feature branch
-
-```bash
-git checkout -b feature/my-feature
-```
-
-3. Commit your work
-
-```bash
-git commit -m "feat: add awesome feature"
-```
-
-4. Push your branch
-
-```bash
-git push origin feature/my-feature
-```
-
-5. Open a Pull Request
+1.  Fork the repository.
+2.  Create a feature branch.
+3.  Commit your changes.
+4.  Push your branch.
+5.  Open a Pull Request.
 
 Please read:
 
-- CONTRIBUTING.md
-- CODE_OF_CONDUCT.md
-- SECURITY.md
+-   CONTRIBUTING.md
+-   CODE_OF_CONDUCT.md
+-   SECURITY.md
 
-before submitting changes.
+before contributing.
 
----
+------------------------------------------------------------------------
 
 # 🧪 Quality Standards
 
-Every release is expected to pass:
+Every release should pass:
 
-- ✅ ESLint
-- ✅ Production Build
-- ✅ Unit Tests
-- ✅ Responsive Layout Verification
-- ✅ Accessibility Checks
-- ✅ Arc Testnet Validation
+-   ✅ ESLint
+-   ✅ Production Build
+-   ✅ Unit Tests
+-   ✅ Responsive Layout Verification
+-   ✅ Accessibility Checks
+-   ✅ Arc Network validation
 
----
+------------------------------------------------------------------------
 
 # 🔒 Security
 
-Security issues should **not** be reported through GitHub Issues.
+Please do not report security vulnerabilities through GitHub Issues.
 
-Please follow the instructions in:
+See **SECURITY.md** for responsible disclosure instructions.
 
-**SECURITY.md**
-
-for responsible disclosure.
-
----
+------------------------------------------------------------------------
 
 # 📚 Documentation
 
-Additional documentation is available:
+Additional documentation:
 
-- 📖 Architecture
-- 📝 Changelog
-- 🛣 Roadmap
-- 📚 Developer Documentation
-- 🔐 Security Policy
-- 🤝 Contribution Guide
+-   Architecture
+-   Changelog
+-   Roadmap
+-   API Reference
+-   Developer Guides
+-   Security Policy
 
----
+------------------------------------------------------------------------
 
 # 🙏 Acknowledgements
 
-Arc Agent Hub is built using amazing open-source technologies.
-
 Special thanks to:
 
-- Arc Network
-- Circle
-- React
-- Vite
-- ethers.js
-- viem
-- MetaMask
-- Rabby Wallet
-- GitHub
-- Vercel
+-   Arc Network
+-   Circle
+-   React
+-   Vite
+-   ethers.js
+-   viem
+-   MetaMask
+-   Rabby Wallet
+-   GitHub
+-   Vercel
 
-for building the tools that make modern Web3 development possible.
-
----
+------------------------------------------------------------------------
 
 # 📄 License
 
-This project is licensed under the **MIT License**.
+Licensed under the **MIT License**.
 
-See **LICENSE** for more information.
+See `LICENSE` for details.
 
----
+------------------------------------------------------------------------
 
-# 🌟 Support the Project
+# ⭐ Support the Project
 
-If Arc Agent Hub helped you learn about:
+If ARC_AGENT_HUB helps you build on Arc Network or explore Circle
+Developer Platform features, please consider starring the repository.
 
-- Arc Testnet
-- Circle AppKit
-- Circle CCTP
-- ERC-8004
-- ERC-8183
-- Stablecoin Development
+------------------------------------------------------------------------
 
-please consider giving the repository a ⭐ on GitHub.
+# 📢 Brand Notice
 
-It helps more developers discover the project.
+ARC_AGENT_HUB is an independent open-source project built on **Arc
+Network**.
 
----
+Arc is a trademark of Circle.
 
-<div align="center">
+This project is not affiliated with, endorsed by, or sponsored by Circle
+unless explicitly stated.
 
-## 🚀 Arc Agent Hub v8.0
+------------------------------------------------------------------------
 
-### Production-Ready AI Agent Operations Dashboard for Arc Testnet
+::: {align="center"}
+## 🚀 ARC_AGENT_HUB
 
-**Built with**
+**AI Workforce Platform built on Arc Network**
 
-React • Vite • Express • Circle AppKit • Circle CCTP • ethers.js • viem • Arc Testnet
+Built with:
 
----
+React • Vite • Express • Circle Developer Platform • Native USDC • Viem
+• ethers.js
 
-**Made with ❤️ by the Arc Builder Community**
-
-© 2026 Arc Agent Hub • Open Source • MIT License
-
-</div>
+Made with ❤️ by the open-source community.
+:::
